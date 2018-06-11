@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="jmlb0003.com.marveleando">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MarveleandoApp"
         android:allowBackup="false"
