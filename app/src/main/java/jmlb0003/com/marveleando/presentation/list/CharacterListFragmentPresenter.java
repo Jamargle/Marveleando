@@ -5,10 +5,11 @@ import java.util.List;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BasePresenter;
 
-public interface CharacterListFragmentPresenter
-        extends BasePresenter<CharacterListFragmentPresenter.CharacterListFragmentView> {
+public interface CharacterListFragmentPresenter extends BasePresenter<CharacterListFragmentPresenter.CharacterListFragmentView> {
 
     void refreshCharacters();
+
+    void fetchMoreCharacters();
 
     void onNoNetworkConnection();
 
@@ -20,9 +21,9 @@ public interface CharacterListFragmentPresenter
 
         void updateCharactersToShow(List<Character> characters);
 
-        void showNoCharactersToShowScreen();
+        void showNoCharactersToShow();
 
-        void showNoInternetConnectionMessage();
+        void showNoInternetConnection();
 
     }
 

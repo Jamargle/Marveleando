@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public abstract class BaseFragment<C> extends Fragment {
+public abstract class BaseFragment<C, P extends BasePresenter<BasePresenter.BaseView>>
+        extends Fragment implements
+        BasePresenter.BaseView {
 
     protected C callback;
 
@@ -33,6 +35,30 @@ public abstract class BaseFragment<C> extends Fragment {
     }
 
     @Override
+    public View onCreateView(
+            @NonNull final LayoutInflater inflater,
+            @Nullable final ViewGroup container,
+            @Nullable final Bundle savedInstanceState) {
+
+        final View rootView = inflater.inflate(getLayoutResourceId(), container, false);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @LayoutRes protected abstract int getLayoutResourceId();
+
+    @Override
+    public void onViewCreated(
+            @NonNull final View view,
+            @Nullable final Bundle savedInstanceState) {
+
+        super.onViewCreated(view, savedInstanceState);
+        getPresenter().attachView(this);
+    }
+
+    @NonNull protected abstract P getPresenter();
+
+    @Override
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(isToBeRetained());
@@ -47,18 +73,10 @@ public abstract class BaseFragment<C> extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            @NonNull final LayoutInflater inflater,
-            @Nullable final ViewGroup container,
-            @Nullable final Bundle savedInstanceState) {
-
-        final View rootView = inflater.inflate(getLayoutResourceId(), container, false);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onPause() {
+        super.onPause();
+        getPresenter().detachView();
     }
-
-    @LayoutRes
-    protected abstract int getLayoutResourceId();
 
     @Override
     public void onDetach() {
