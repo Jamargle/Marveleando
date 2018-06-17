@@ -7,7 +7,7 @@ import jmlb0003.com.marveleando.presentation.list.CharacterListActivity;
 @Module
 public abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(modules = FragmentBuilder.class)
+    @ContributesAndroidInjector(modules = {CharacterListActivityModule.class, FragmentBuilder.class})
     public abstract CharacterListActivity bindCharacterListActivity();
 
 }
