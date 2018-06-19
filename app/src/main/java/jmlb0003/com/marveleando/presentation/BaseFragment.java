@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public abstract class BaseFragment<C, P extends BasePresenter<BasePresenter.BaseView>>
+public abstract class BaseFragment<C, P extends BasePresenter>
         extends Fragment implements
         BasePresenter.BaseView {
 
