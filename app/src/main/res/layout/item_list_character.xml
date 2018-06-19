@@ -11,6 +11,7 @@
         android:layout_height="@dimen/character_image_height"
         android:contentDescription="@string/character_image"
         android:scaleType="centerInside"
+        android:src="@drawable/ic_marvel_balloon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
