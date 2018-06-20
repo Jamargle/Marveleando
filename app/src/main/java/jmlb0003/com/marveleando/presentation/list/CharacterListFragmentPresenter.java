@@ -13,6 +13,10 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
     void onNoNetworkConnection();
 
+    void onCharacterDataSetEmpty();
+
+    void onCharacterClicked(Character character);
+
     interface CharacterListFragmentView extends BasePresenter.BaseView {
 
         void showLoading();
@@ -24,6 +28,8 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
         void showNoCharactersToShow();
 
         void showNoInternetConnection();
+
+        void proceedToCharacterDetails(Character character);
 
     }
 

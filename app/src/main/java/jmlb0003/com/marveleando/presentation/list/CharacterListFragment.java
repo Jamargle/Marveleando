@@ -30,7 +30,6 @@ public final class CharacterListFragment
 
     @Inject CharacterListFragmentPresenter presenter;
 
-    private Callback callback;
     private MarvelCharacterAdapter adapter;
 
     @Override
@@ -81,16 +80,24 @@ public final class CharacterListFragment
     }
 
     @Override
+    public void proceedToCharacterDetails(final Character character) {
+        callback.onNavigateToCharacterDetails(character);
+    }
+
+    @Override
     public void onCharacterDataSetEmpty() {
-// TODO Empty view
+        presenter.onCharacterDataSetEmpty();
     }
 
     @Override
     public void onCharacterClicked(final Character character) {
-//        presenter.onCharacterClicked(character);
+        presenter.onCharacterClicked(character);
     }
 
     interface Callback {
+
+        void onNavigateToCharacterDetails(Character character);
+
     }
 
 }

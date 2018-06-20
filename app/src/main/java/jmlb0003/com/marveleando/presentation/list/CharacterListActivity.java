@@ -4,17 +4,20 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import jmlb0003.com.marveleando.R;
+import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 public final class CharacterListActivity
         extends BaseActivity<CharacterListActivityPresenter> implements
-        CharacterListActivityPresenter.CharacterListActivityView {
+        CharacterListActivityPresenter.CharacterListActivityView,
+        CharacterListFragment.Callback {
 
     private static final int REQUEST_READ_CONTACTS = 0;
 
@@ -65,6 +68,12 @@ public final class CharacterListActivity
     @Override
     protected CharacterListActivityPresenter getPresenter() {
         return presenter;
+    }
+
+    @Override
+    public void onNavigateToCharacterDetails(final Character character) {
+        // TODO Implement on character clicked callback
+        Toast.makeText(this, "The character " + character.getName() + " has been clicked", Toast.LENGTH_SHORT).show();
     }
 
 }
