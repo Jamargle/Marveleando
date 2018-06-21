@@ -2,6 +2,8 @@ package jmlb0003.com.marveleando.domain.repository;
 
 import java.util.List;
 
+import jmlb0003.com.marveleando.domain.model.Character;
+
 /**
  * Interface for retrieving Marvel characters information from the Marvel API
  */
@@ -23,7 +25,7 @@ public interface CharacterNetworkRepository {
      *                      a value from 0 to 100.
      * @param name          {@link String} with the name or part of the name of the characters you
      *                      want to fetch.
-     * @return
+     * @return List of {@link Character}
      */
     List<Character> getCharactersByName(
             int maxCharacters,
