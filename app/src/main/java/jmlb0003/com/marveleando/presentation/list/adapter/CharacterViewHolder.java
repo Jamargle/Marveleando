@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jmlb0003.com.marveleando.R;
@@ -21,10 +23,12 @@ public final class CharacterViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindCharacter(final Character character) {
-        final String thumbnailPath = character.getImage();
-        final String completePath;
         characterNameView.setText(character.getName());
-        // TODO Implement the logic to generate the URL for the image
+        Picasso.with(itemView.getContext())
+                .load(character.getImagePortrait()).fit()
+                .placeholder(R.drawable.ic_marvel_balloon)
+                .error(R.drawable.ic_marvel_balloon)
+                .into(characterImageView);
     }
 
 }

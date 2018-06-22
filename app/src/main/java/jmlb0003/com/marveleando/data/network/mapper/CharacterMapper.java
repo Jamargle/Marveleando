@@ -27,7 +27,8 @@ public final class CharacterMapper {
             model.setId(characterResponse.getId());
             model.setName(characterResponse.getName());
             model.setDescription(characterResponse.getDescription());
-            model.setImage(characterResponse.getThumbnail().getPath());
+            model.setImagePortrait(CharacterImageHelper.getPortraitImageUrl(characterResponse.getThumbnail()));
+            model.setImageLandscape(CharacterImageHelper.getLandscapeImageUrl(characterResponse.getThumbnail()));
             model.setUrls(mapUrls(characterResponse.getUrls()));
 
             characters.add(model);

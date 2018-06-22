@@ -10,7 +10,8 @@ public final class Character {
     private int id;
     private String name;
     private String description;
-    private String image;
+    private String imagePortrait;
+    private String imageLandscape;
     private List<String> urls = new ArrayList<>(URL_DEFAULT_COUNT);
 
     public int getId() {
@@ -37,12 +38,20 @@ public final class Character {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public String getImagePortrait() {
+        return imagePortrait;
     }
 
-    public void setImage(final String image) {
-        this.image = image;
+    public void setImagePortrait(final String imagePortrait) {
+        this.imagePortrait = imagePortrait;
+    }
+
+    public String getImageLandscape() {
+        return imageLandscape;
+    }
+
+    public void setImageLandscape(final String imageLandscape) {
+        this.imageLandscape = imageLandscape;
     }
 
     public List<String> getUrls() {

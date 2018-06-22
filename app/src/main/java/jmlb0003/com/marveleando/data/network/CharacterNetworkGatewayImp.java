@@ -6,9 +6,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import jmlb0003.com.marveleando.data.network.apicontract.CharacterDataContainer;
-import jmlb0003.com.marveleando.data.network.apicontract.CharacterResponse;
 import jmlb0003.com.marveleando.data.network.apicontract.MarvelApiResponse;
+import jmlb0003.com.marveleando.data.network.mapper.CharacterMapper;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.domain.repository.CharacterNetworkRepository;
 import retrofit2.Call;
@@ -36,25 +35,11 @@ public final class CharacterNetworkGatewayImp implements CharacterNetworkReposit
     }
 
     private List<Character> parseCharactersFromResponse(final Call<MarvelApiResponse> call) {
-
-        // TODO This method has a lot of improvements to do
-
         final List<Character> characters = new ArrayList<>();
         try {
             final MarvelApiResponse response = call.execute().body();
             if (response != null) {
-                final CharacterDataContainer data = response.getData();
-                final List<CharacterResponse> charactersReponse = data.getCharacters();
-                for (CharacterResponse characterResponse : charactersReponse) {
-                    final Character character = new Character();
-                    character.setId(characterResponse.getId());
-                    character.setName(characterResponse.getName());
-                    character.setDescription(characterResponse.getDescription());
-                    character.setImage(characterResponse.getThumbnail().getPath());
-//                    character.setUrls(characterResponse.getUrls());
-
-                    characters.add(character);
-                }
+                characters.addAll(CharacterMapper.mapToModel(response));
             }
         } catch (IOException e) {
             e.printStackTrace();

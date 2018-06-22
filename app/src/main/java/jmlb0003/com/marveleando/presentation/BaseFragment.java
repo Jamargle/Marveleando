@@ -73,6 +73,14 @@ public abstract class BaseFragment<C, P extends BasePresenter>
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (getPresenter().getView() == null) {
+            getPresenter().attachView(this);
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         getPresenter().detachView();
