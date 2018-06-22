@@ -27,6 +27,8 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
         void showNoCharactersToShow();
 
+        void hideNoCharactersToShow();
+
         void showNoInternetConnection();
 
         void proceedToCharacterDetails(Character character);

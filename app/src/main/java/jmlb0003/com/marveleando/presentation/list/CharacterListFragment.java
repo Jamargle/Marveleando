@@ -43,6 +43,12 @@ public final class CharacterListFragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        presenter.refreshCharacters();
+    }
+
+    @Override
     protected int getLayoutResourceId() {
         return R.layout.fragment_character_list;
     }
@@ -72,6 +78,12 @@ public final class CharacterListFragment
     public void showNoCharactersToShow() {
         charactersRecyclerView.setVisibility(View.GONE);
         emptyListView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideNoCharactersToShow() {
+        charactersRecyclerView.setVisibility(View.VISIBLE);
+        emptyListView.setVisibility(View.GONE);
     }
 
     @Override
