@@ -16,4 +16,14 @@ public interface CharacterLocalRepository {
      */
     List<Character> getCharacters();
 
+    boolean beginningCharactersAreValid();
+
+    void refreshBeginningCharactersIfNeeded(List<Character> characters);
+
+    void persist(List<Character> characters);
+
+    void update(Character characterToUpdate);
+
+    void delete(Character characterToDelete);
+
 }
