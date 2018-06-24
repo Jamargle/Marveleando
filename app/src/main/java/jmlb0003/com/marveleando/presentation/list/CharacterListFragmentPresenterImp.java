@@ -45,8 +45,7 @@ public final class CharacterListFragmentPresenterImp
     }
 
     @Override
-    public void fetchMoreCharacters() {
-
+    public void fetchMoreCharacters(int currentPage) {
     }
 
     @Override

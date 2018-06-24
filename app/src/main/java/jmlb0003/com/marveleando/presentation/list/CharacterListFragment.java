@@ -3,18 +3,19 @@ package jmlb0003.com.marveleando.presentation.list;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import jmlb0003.com.marveleando.R;
+import jmlb0003.com.marveleando.app.utils.EndlessRecyclerOnScrollListener;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseFragment;
 import jmlb0003.com.marveleando.presentation.list.adapter.MarvelCharacterAdapter;
@@ -38,8 +39,16 @@ public final class CharacterListFragment
             @Nullable final Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
-        adapter = new MarvelCharacterAdapter(new ArrayList<Character>(), this);
+        adapter = new MarvelCharacterAdapter(this);
         charactersRecyclerView.setAdapter(adapter);
+        charactersRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((GridLayoutManager) charactersRecyclerView.getLayoutManager()) {
+
+            @Override
+            public void onLoadMore(final int currentPage) {
+                presenter.fetchMoreCharacters(currentPage);
+            }
+
+        });
     }
 
     @Override

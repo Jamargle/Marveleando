@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jmlb0003.com.marveleando.R;
@@ -17,12 +18,9 @@ public final class MarvelCharacterAdapter
     private final List<Character> characterDataSet;
     private final CharacterAdapterListener listener;
 
-    public MarvelCharacterAdapter(
-            @NonNull final List<Character> characterList,
-            @NonNull final CharacterAdapterListener listener) {
-
+    public MarvelCharacterAdapter(@NonNull final CharacterAdapterListener listener) {
         this.listener = listener;
-        characterDataSet = characterList;
+        characterDataSet = new ArrayList<>();
         if (characterDataSet.isEmpty()) {
             listener.onCharacterDataSetEmpty();
         }
@@ -67,6 +65,12 @@ public final class MarvelCharacterAdapter
         }
 
         notifyDataSetChanged();
+    }
+
+    public void addCharacters(@NonNull final List<Character> newCharacters) {
+        final int startPosition = getItemCount();
+        characterDataSet.addAll(newCharacters);
+        notifyItemRangeInserted(startPosition, newCharacters.size());
     }
 
     public interface CharacterAdapterListener {
