@@ -17,7 +17,7 @@ public final class Character {
 
     private static final int URL_DEFAULT_COUNT = 3;
     private static final String COLUMN_ID = "id";
-    private static final String COLUMN_NAME = "name";
+    public static final String COLUMN_NAME = "name";
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_IMAGE_PORTRAIT = "image_portrait";
     private static final String COLUMN_IMAGE_LANDSCAPE = "image_landscape";

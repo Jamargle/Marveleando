@@ -15,7 +15,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface CharacterDao {
 
-    @Query("SELECT * FROM " + Character.TABLE_NAME)
+    @Query("SELECT * FROM " + Character.TABLE_NAME + " ORDER BY " + Character.COLUMN_NAME)
     List<Character> getCharacters();
 
     @Insert(onConflict = REPLACE)
