@@ -9,7 +9,7 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
     void refreshCharacters();
 
-    void fetchMoreCharacters();
+    void fetchMoreCharacters(int currentPage);
 
     void onNoNetworkConnection();
 

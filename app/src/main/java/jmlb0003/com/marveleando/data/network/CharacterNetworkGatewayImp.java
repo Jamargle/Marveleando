@@ -14,6 +14,7 @@ import retrofit2.Call;
 
 public final class CharacterNetworkGatewayImp implements CharacterNetworkRepository {
 
+    private static final String MAX_CHARACTERS_TO_DOWNLOAD = "20";
     private final MarvelApiClient apiClient;
 
     @Inject
@@ -22,15 +23,21 @@ public final class CharacterNetworkGatewayImp implements CharacterNetworkReposit
     }
 
     @Override
-    public List<Character> getCharacters(final int maxCharacters) {
-        final String maxCharactersToFetch;
-        if (maxCharacters > 0 && maxCharacters < 100) {
-            maxCharactersToFetch = String.valueOf(maxCharacters);
-        } else {
-            maxCharactersToFetch = null;
-        }
-        final Call<MarvelApiResponse> call = apiClient.getListOfCharacters(null, maxCharactersToFetch, null);
+    public List<Character> getCharacters() {
+        return getCharacters(1);
+    }
 
+    @Override
+    public List<Character> getCharacters(final int currentPage) {
+        final String offset;
+        if (currentPage <= 1) {
+            offset = "0";
+        } else {
+            final int max = Integer.parseInt(MAX_CHARACTERS_TO_DOWNLOAD);
+            final int currentCharactersShown = max * (currentPage - 1);
+            offset = String.valueOf(currentCharactersShown);
+        }
+        final Call<MarvelApiResponse> call = apiClient.getListOfCharacters(null, null, offset);
         return parseCharactersFromResponse(call);
     }
 

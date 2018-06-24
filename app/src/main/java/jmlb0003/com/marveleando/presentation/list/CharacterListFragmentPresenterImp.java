@@ -6,7 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import jmlb0003.com.marveleando.domain.interactor.DefaultObserver;
-import jmlb0003.com.marveleando.domain.interactor.FetchCharactersUseCase;
+import jmlb0003.com.marveleando.domain.interactor.FetchBeginningCharacters;
+import jmlb0003.com.marveleando.domain.interactor.FetchMoreCharacters;
 import jmlb0003.com.marveleando.domain.interactor.UseCase;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BasePresenterImpl;
@@ -16,12 +17,15 @@ public final class CharacterListFragmentPresenterImp
         implements CharacterListFragmentPresenter {
 
     private final UseCase<Void, List<Character>> fetchCharactersUseCase;
+    private final UseCase<Integer, List<Character>> fetchMoreCharactersUseCase;
 
     @Inject
     public CharacterListFragmentPresenterImp(
-            @Named(FetchCharactersUseCase.NAME) final UseCase<Void, List<Character>> fetchCharactersUseCase) {
+            @Named(FetchBeginningCharacters.NAME) final UseCase<Void, List<Character>> fetchCharactersUseCase,
+            @Named(FetchMoreCharacters.NAME) final UseCase<Integer, List<Character>> fetchMoreCharactersUseCase) {
 
         this.fetchCharactersUseCase = fetchCharactersUseCase;
+        this.fetchMoreCharactersUseCase = fetchMoreCharactersUseCase;
     }
 
     @Override
@@ -45,8 +49,22 @@ public final class CharacterListFragmentPresenterImp
     }
 
     @Override
-    public void fetchMoreCharacters() {
+    public void fetchMoreCharacters(final int currentPage) {
+        if (getView() != null) {
+            getView().showLoading();
+        }
+        fetchMoreCharactersUseCase.execute(currentPage, new DefaultObserver<List<Character>>() {
 
+            @Override
+            public void processOnNext(final List<Character> characters) {
+                super.processOnNext(characters);
+                if (getView() != null) {
+                    getView().updateCharactersToShow(characters);
+                    getView().hideLoading();
+                }
+            }
+
+        });
     }
 
     @Override
