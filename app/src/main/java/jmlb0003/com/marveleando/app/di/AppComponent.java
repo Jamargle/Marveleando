@@ -15,7 +15,7 @@ import jmlb0003.com.marveleando.MarveleandoApp;
         ApplicationModule.class,
         AndroidInjectionModule.class,
         ActivityBuilder.class,
-        NetworkModule.class,
+        RepositoryModule.class,
         RoomDatabaseModule.class
 })
 public interface AppComponent extends AndroidInjector<MarveleandoApp> {

@@ -18,6 +18,7 @@ public final class FetchBeginningCharacters extends UseCase<Void, List<Character
     public static final String NAME = "InjectionKey:FetchBeginningCharactersUseCase";
 
     private static final int MAX_CHARACTERS = 100;
+    private final CharacterLocalRepository characterLocalRepository;
     private final CharacterNetworkRepository characterNetworkRepository;
 
     @Inject
@@ -28,6 +29,7 @@ public final class FetchBeginningCharacters extends UseCase<Void, List<Character
             final PostExecutionThread postExecutionThread) {
 
         super(threadExecutor, postExecutionThread);
+        this.characterLocalRepository = characterLocalRepository;
         this.characterNetworkRepository = characterNetworkRepository;
     }
 
@@ -35,8 +37,14 @@ public final class FetchBeginningCharacters extends UseCase<Void, List<Character
     protected Observable<List<Character>> buildUseCaseObservable(@Nullable final Void params) {
         return Observable.create(new ObservableOnSubscribe<List<Character>>() {
             @Override
-            public void subscribe(ObservableEmitter<List<Character>> emitter) {
-                emitter.onNext(characterNetworkRepository.getCharacters(MAX_CHARACTERS));
+            public void subscribe(final ObservableEmitter<List<Character>> emitter) {
+                if (characterLocalRepository.beginningCharactersAreValid()) {
+                    emitter.onNext(characterLocalRepository.getCharacters());
+                } else {
+                    final List<Character> charactersFromNetwork = characterNetworkRepository.getCharacters(MAX_CHARACTERS);
+                    characterLocalRepository.refreshBeginningCharactersIfNeeded(charactersFromNetwork);
+                    emitter.onNext(charactersFromNetwork);
+                }
             }
         });
     }
