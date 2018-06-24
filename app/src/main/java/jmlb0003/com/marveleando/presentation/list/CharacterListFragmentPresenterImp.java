@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import jmlb0003.com.marveleando.domain.interactor.DefaultObserver;
-import jmlb0003.com.marveleando.domain.interactor.FetchCharactersUseCase;
+import jmlb0003.com.marveleando.domain.interactor.FetchBeginningCharacters;
 import jmlb0003.com.marveleando.domain.interactor.UseCase;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BasePresenterImpl;
@@ -19,7 +19,7 @@ public final class CharacterListFragmentPresenterImp
 
     @Inject
     public CharacterListFragmentPresenterImp(
-            @Named(FetchCharactersUseCase.NAME) final UseCase<Void, List<Character>> fetchCharactersUseCase) {
+            @Named(FetchBeginningCharacters.NAME) final UseCase<Void, List<Character>> fetchCharactersUseCase) {
 
         this.fetchCharactersUseCase = fetchCharactersUseCase;
     }
