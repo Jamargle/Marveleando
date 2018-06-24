@@ -80,7 +80,7 @@ public final class CharacterListFragment
 
     @Override
     public void updateCharactersToShow(final List<Character> characters) {
-        adapter.updateCharacters(characters);
+        adapter.addCharacters(characters);
     }
 
     @Override

@@ -21,9 +21,7 @@ public final class MarvelCharacterAdapter
     public MarvelCharacterAdapter(@NonNull final CharacterAdapterListener listener) {
         this.listener = listener;
         characterDataSet = new ArrayList<>();
-        if (characterDataSet.isEmpty()) {
-            listener.onCharacterDataSetEmpty();
-        }
+        listener.onCharacterDataSetEmpty();
     }
 
     @Override
@@ -56,21 +54,13 @@ public final class MarvelCharacterAdapter
         return characterDataSet.size();
     }
 
-    public void updateCharacters(final List<Character> newDataSet) {
-        characterDataSet.clear();
-        if (newDataSet != null) {
-            characterDataSet.addAll(newDataSet);
-        } else {
-            listener.onCharacterDataSetEmpty();
-        }
-
-        notifyDataSetChanged();
-    }
-
     public void addCharacters(@NonNull final List<Character> newCharacters) {
         final int startPosition = getItemCount();
         characterDataSet.addAll(newCharacters);
         notifyItemRangeInserted(startPosition, newCharacters.size());
+        if (characterDataSet.isEmpty()) {
+            listener.onCharacterDataSetEmpty();
+        }
     }
 
     public interface CharacterAdapterListener {
