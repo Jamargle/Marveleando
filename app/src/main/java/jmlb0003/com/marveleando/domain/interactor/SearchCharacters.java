@@ -1,5 +1,6 @@
 package jmlb0003.com.marveleando.domain.interactor;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.List;
@@ -12,14 +13,14 @@ import io.reactivex.ObservableOnSubscribe;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.domain.repository.CharacterNetworkRepository;
 
-public class FetchMoreCharacters extends UseCase<Integer, List<Character>> {
+public final class SearchCharacters extends UseCase<SearchCharacters.Input, List<Character>> {
 
-    public static final String NAME = "InjectionKey:FetchMoreCharactersUseCase";
+    public static final String NAME = "InjectionKey:SearchCharactersUseCase";
 
     private final CharacterNetworkRepository characterNetworkRepository;
 
     @Inject
-    public FetchMoreCharacters(
+    public SearchCharacters(
             final CharacterNetworkRepository characterNetworkRepository,
             final ThreadExecutor threadExecutor,
             final PostExecutionThread postExecutionThread) {
@@ -29,18 +30,42 @@ public class FetchMoreCharacters extends UseCase<Integer, List<Character>> {
     }
 
     @Override
-    protected Observable<List<Character>> buildUseCaseObservable(@Nullable final Integer params) {
+    protected Observable<List<Character>> buildUseCaseObservable(@Nullable final Input params) {
         return Observable.create(new ObservableOnSubscribe<List<Character>>() {
             @Override
             public void subscribe(final ObservableEmitter<List<Character>> emitter) {
                 if (params == null) {
                     emitter.onNext(characterNetworkRepository.getCharacters());
                 } else {
-                    emitter.onNext(characterNetworkRepository.getCharacters(params));
+                    emitter.onNext(characterNetworkRepository.getCharactersByName(
+                            params.getCurrentPage(),
+                            params.getQuery()));
                 }
             }
         });
     }
 
-}
+    public static final class Input {
 
+        private int currentPage;
+        private String query;
+
+        public Input(
+                final int currentPage,
+                @NonNull final String query) {
+
+            this.currentPage = currentPage;
+            this.query = query;
+        }
+
+        public int getCurrentPage() {
+            return currentPage;
+        }
+
+        public String getQuery() {
+            return query;
+        }
+
+    }
+
+}

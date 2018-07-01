@@ -6,8 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import jmlb0003.com.marveleando.domain.interactor.DefaultObserver;
-import jmlb0003.com.marveleando.domain.interactor.FetchBeginningCharacters;
-import jmlb0003.com.marveleando.domain.interactor.FetchMoreCharacters;
+import jmlb0003.com.marveleando.domain.interactor.FetchCharacters;
+import jmlb0003.com.marveleando.domain.interactor.SearchCharacters;
 import jmlb0003.com.marveleando.domain.interactor.UseCase;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BasePresenterImpl;
@@ -16,51 +16,36 @@ public final class CharacterListFragmentPresenterImp
         extends BasePresenterImpl<CharacterListFragmentPresenter.CharacterListFragmentView>
         implements CharacterListFragmentPresenter {
 
-    private final UseCase<Void, List<Character>> fetchCharactersUseCase;
-    private final UseCase<Integer, List<Character>> fetchMoreCharactersUseCase;
+    private final UseCase<Integer, List<Character>> fetchCharactersUseCase;
+    private final UseCase<SearchCharacters.Input, List<Character>> searchCharactersUseCase;
 
     @Inject
     public CharacterListFragmentPresenterImp(
-            @Named(FetchBeginningCharacters.NAME) final UseCase<Void, List<Character>> fetchCharactersUseCase,
-            @Named(FetchMoreCharacters.NAME) final UseCase<Integer, List<Character>> fetchMoreCharactersUseCase) {
+            @Named(FetchCharacters.NAME) final UseCase<Integer, List<Character>> fetchCharactersUseCase,
+            @Named(SearchCharacters.NAME) final UseCase<SearchCharacters.Input, List<Character>> searchCharactersUseCase) {
 
         this.fetchCharactersUseCase = fetchCharactersUseCase;
-        this.fetchMoreCharactersUseCase = fetchMoreCharactersUseCase;
+        this.searchCharactersUseCase = searchCharactersUseCase;
     }
 
     @Override
-    public void refreshCharacters() {
+    public void fetchCharacters(final int currentPage) {
         if (getView() != null) {
             getView().showLoading();
         }
-        fetchCharactersUseCase.execute(null, new DefaultObserver<List<Character>>() {
+        fetchCharactersUseCase.execute(currentPage, new DefaultObserver<List<Character>>() {
 
             @Override
             public void processOnNext(final List<Character> characters) {
-                super.processOnNext(characters);
                 if (getView() != null) {
                     getView().hideNoCharactersToShow();
-                    getView().updateCharactersToShow(characters);
                     getView().hideLoading();
-                }
-            }
 
-        });
-    }
-
-    @Override
-    public void fetchMoreCharacters(final int currentPage) {
-        if (getView() != null) {
-            getView().showLoading();
-        }
-        fetchMoreCharactersUseCase.execute(currentPage, new DefaultObserver<List<Character>>() {
-
-            @Override
-            public void processOnNext(final List<Character> characters) {
-                super.processOnNext(characters);
-                if (getView() != null) {
-                    getView().updateCharactersToShow(characters);
-                    getView().hideLoading();
+                    if (currentPage > 1) {
+                        getView().addCharactersToShownList(characters);
+                    } else {
+                        getView().setCharactersToShow(characters);
+                    }
                 }
             }
 
@@ -84,6 +69,37 @@ public final class CharacterListFragmentPresenterImp
         if (getView() != null) {
             getView().proceedToCharacterDetails(character);
         }
+    }
+
+    @Override
+    public void searchCharacterByName(
+            final int currentPage,
+            final String query) {
+
+        if (getView() != null) {
+            getView().showLoading();
+        }
+        searchCharactersUseCase.execute(
+                new SearchCharacters.Input(currentPage, query),
+                new DefaultObserver<List<Character>>() {
+
+                    @Override
+                    public void processOnNext(final List<Character> characters) {
+                        if (getView() != null) {
+                            getView().hideNoCharactersToShow();
+                            getView().setCharactersToShow(characters);
+                            getView().hideLoading();
+                        }
+                    }
+
+                    @Override
+                    public void processOnError(final Throwable exception) {
+                        if (getView() != null) {
+                            getView().hideLoading();
+                            getView().showNoCharactersToShow();
+                        }
+                    }
+                });
     }
 
 }

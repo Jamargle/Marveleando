@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.data.network;
 
+import android.support.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,14 @@ public final class CharacterNetworkGatewayImp implements CharacterNetworkReposit
 
     @Override
     public List<Character> getCharacters(final int currentPage) {
+        return getCharactersByName(currentPage, null);
+    }
+
+    @Override
+    public List<Character> getCharactersByName(
+            final int currentPage,
+            @Nullable final String name) {
+
         final String offset;
         if (currentPage <= 1) {
             offset = "0";
@@ -37,7 +47,7 @@ public final class CharacterNetworkGatewayImp implements CharacterNetworkReposit
             final int currentCharactersShown = max * (currentPage - 1);
             offset = String.valueOf(currentCharactersShown);
         }
-        final Call<MarvelApiResponse> call = apiClient.getListOfCharacters(null, null, offset);
+        final Call<MarvelApiResponse> call = apiClient.getListOfCharacters(name, null, offset);
         return parseCharactersFromResponse(call);
     }
 
@@ -52,12 +62,6 @@ public final class CharacterNetworkGatewayImp implements CharacterNetworkReposit
             e.printStackTrace();
         }
         return characters;
-    }
-
-    @Override
-    public List<Character> getCharactersByName(int maxCharacters, String name) {
-        // TODO Implement get characters by name
-        return null;
     }
 
 }

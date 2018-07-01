@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.presentation.list;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import jmlb0003.com.marveleando.domain.model.Character;
@@ -7,9 +9,13 @@ import jmlb0003.com.marveleando.presentation.BasePresenter;
 
 public interface CharacterListFragmentPresenter extends BasePresenter<CharacterListFragmentPresenter.CharacterListFragmentView> {
 
-    void refreshCharacters();
-
-    void fetchMoreCharacters(int currentPage);
+    /**
+     * It launches the download of Marvel characters for the page given as parameter
+     *
+     * @param currentPage Integer with the value for the current page of Marvel characters to
+     *                    download
+     */
+    void fetchCharacters(int currentPage);
 
     void onNoNetworkConnection();
 
@@ -17,13 +23,19 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
     void onCharacterClicked(Character character);
 
+    void searchCharacterByName(
+            int currentPage,
+            @Nullable String query);
+
     interface CharacterListFragmentView extends BasePresenter.BaseView {
 
         void showLoading();
 
         void hideLoading();
 
-        void updateCharactersToShow(List<Character> characters);
+        void setCharactersToShow(List<Character> characters);
+
+        void addCharactersToShownList(List<Character> characters);
 
         void showNoCharactersToShow();
 

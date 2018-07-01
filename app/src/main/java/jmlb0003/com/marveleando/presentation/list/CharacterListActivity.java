@@ -26,6 +26,8 @@ public final class CharacterListActivity
 
     @Inject CharacterListActivityPresenter presenter;
 
+    private CharacterListFragment listFragment;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,13 +96,12 @@ public final class CharacterListActivity
     }
 
     private void initSearchViewQueryTextListener(@NonNull final SearchView searchView) {
+        listFragment = (CharacterListFragment) getFragmentManager()
+                .findFragmentById(R.id.character_list_fragment);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
-
-                // TODO Let list fragment to handle the query
-                Toast.makeText(CharacterListActivity.this, "TODO Query -> " + query, Toast.LENGTH_SHORT).show();
-
+                listFragment.searchCharacter(query);
                 return false;
             }
 

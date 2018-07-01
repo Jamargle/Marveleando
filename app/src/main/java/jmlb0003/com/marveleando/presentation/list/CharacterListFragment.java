@@ -45,7 +45,7 @@ public final class CharacterListFragment
 
             @Override
             public void onLoadMore(final int currentPage) {
-                presenter.fetchMoreCharacters(currentPage);
+                presenter.fetchCharacters(currentPage);
             }
 
         });
@@ -54,7 +54,7 @@ public final class CharacterListFragment
     @Override
     public void onStart() {
         super.onStart();
-        presenter.refreshCharacters();
+        presenter.fetchCharacters(0);
     }
 
     @Override
@@ -79,7 +79,7 @@ public final class CharacterListFragment
     }
 
     @Override
-    public void updateCharactersToShow(final List<Character> characters) {
+    public void addCharactersToShownList(final List<Character> characters) {
         adapter.addCharacters(characters);
     }
 
@@ -113,6 +113,10 @@ public final class CharacterListFragment
     @Override
     public void onCharacterClicked(final Character character) {
         presenter.onCharacterClicked(character);
+    }
+
+    public void searchCharacter(final String query) {
+        presenter.searchCharacterByName(0, query);
     }
 
     interface Callback {
