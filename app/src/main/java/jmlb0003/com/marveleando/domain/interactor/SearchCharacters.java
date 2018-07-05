@@ -1,6 +1,5 @@
 package jmlb0003.com.marveleando.domain.interactor;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.List;
@@ -11,21 +10,25 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import jmlb0003.com.marveleando.domain.model.Character;
+import jmlb0003.com.marveleando.domain.repository.CharacterLocalRepository;
 import jmlb0003.com.marveleando.domain.repository.CharacterNetworkRepository;
 
 public final class SearchCharacters extends UseCase<SearchCharacters.Input, List<Character>> {
 
     public static final String NAME = "InjectionKey:SearchCharactersUseCase";
 
+    private final CharacterLocalRepository characterLocalRepository;
     private final CharacterNetworkRepository characterNetworkRepository;
 
     @Inject
     public SearchCharacters(
+            final CharacterLocalRepository characterLocalRepository,
             final CharacterNetworkRepository characterNetworkRepository,
             final ThreadExecutor threadExecutor,
             final PostExecutionThread postExecutionThread) {
 
         super(threadExecutor, postExecutionThread);
+        this.characterLocalRepository = characterLocalRepository;
         this.characterNetworkRepository = characterNetworkRepository;
     }
 
@@ -34,8 +37,8 @@ public final class SearchCharacters extends UseCase<SearchCharacters.Input, List
         return Observable.create(new ObservableOnSubscribe<List<Character>>() {
             @Override
             public void subscribe(final ObservableEmitter<List<Character>> emitter) {
-                if (params == null) {
-                    emitter.onNext(characterNetworkRepository.getCharacters());
+                if (params == null || (params.currentPage <= 1 && params.query == null)) {
+                    fetchBeginningCharacters(emitter);
                 } else {
                     emitter.onNext(characterNetworkRepository.getCharactersByName(
                             params.getCurrentPage(),
@@ -45,6 +48,16 @@ public final class SearchCharacters extends UseCase<SearchCharacters.Input, List
         });
     }
 
+    private void fetchBeginningCharacters(final ObservableEmitter<List<Character>> emitter) {
+        if (characterLocalRepository.beginningCharactersAreValid()) {
+            emitter.onNext(characterLocalRepository.getCharacters());
+        } else {
+            final List<Character> charactersFromNetwork = characterNetworkRepository.getCharacters();
+            characterLocalRepository.refreshBeginningCharactersIfNeeded(charactersFromNetwork);
+            emitter.onNext(charactersFromNetwork);
+        }
+    }
+
     public static final class Input {
 
         private int currentPage;
@@ -52,7 +65,7 @@ public final class SearchCharacters extends UseCase<SearchCharacters.Input, List
 
         public Input(
                 final int currentPage,
-                @NonNull final String query) {
+                @Nullable final String query) {
 
             this.currentPage = currentPage;
             this.query = query;
@@ -62,6 +75,7 @@ public final class SearchCharacters extends UseCase<SearchCharacters.Input, List
             return currentPage;
         }
 
+        @Nullable
         public String getQuery() {
             return query;
         }

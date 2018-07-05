@@ -53,7 +53,7 @@ public final class CharacterListFragment
             @Override
             public void onLoadMore(final int currentPage) {
                 CharacterListFragment.this.currentPage = currentPage;
-                presenter.fetchMoreCharacters(currentPage, currentQueryText);
+                presenter.fetchMoreCharactersOnScroll(currentPage, currentQueryText);
             }
 
         };
@@ -65,16 +65,27 @@ public final class CharacterListFragment
         if (savedInstanceState != null) {
             recoverState(savedInstanceState);
         } else {
-            presenter.fetchCharacters(0);
+            presenter.searchCharacterByName(0, currentQueryText);
         }
         super.onActivityCreated(savedInstanceState);
+    }
+
+    private void recoverState(final Bundle state) {
+        if (state.containsKey(SAVED_CURRENT_PAGE)) {
+            currentPage = state.getInt(SAVED_CURRENT_PAGE);
+        }
+        if (state.containsKey(SAVED_CURRENT_SEARCH)) {
+            currentQueryText = state.getString(SAVED_CURRENT_SEARCH);
+        }
+
+        scrollListener.setCurrentPage(currentPage - 1);
+        presenter.searchCharacterByName(currentPage - 1, currentQueryText);
     }
 
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         outState.putInt(SAVED_CURRENT_PAGE, currentPage);
         outState.putString(SAVED_CURRENT_SEARCH, currentQueryText);
-
         super.onSaveInstanceState(outState);
     }
 
@@ -100,7 +111,7 @@ public final class CharacterListFragment
     }
 
     @Override
-    public void setCharactersToShow(final List<Character> characters) {
+    public void setBeginningCharactersToShow(final List<Character> characters) {
         adapter.showCharacters(characters);
     }
 
@@ -145,18 +156,6 @@ public final class CharacterListFragment
         currentQueryText = query;
         scrollListener.setCurrentPage(0);
         presenter.searchCharacterByName(0, query);
-    }
-
-    private void recoverState(final Bundle state) {
-        if (state.containsKey(SAVED_CURRENT_PAGE)) {
-            currentPage = state.getInt(SAVED_CURRENT_PAGE);
-        }
-        if (state.containsKey(SAVED_CURRENT_SEARCH)) {
-            currentQueryText = state.getString(SAVED_CURRENT_SEARCH);
-        }
-
-        scrollListener.setCurrentPage(currentPage - 1);
-        presenter.searchCharacterByName(currentPage - 1, currentQueryText);
     }
 
     interface Callback {

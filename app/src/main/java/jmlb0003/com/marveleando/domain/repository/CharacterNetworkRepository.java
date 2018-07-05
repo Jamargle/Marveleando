@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.domain.repository;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import jmlb0003.com.marveleando.domain.model.Character;
@@ -36,6 +38,6 @@ public interface CharacterNetworkRepository {
      */
     List<Character> getCharactersByName(
             int currentPage,
-            String name);
+            @Nullable String name);
 
 }

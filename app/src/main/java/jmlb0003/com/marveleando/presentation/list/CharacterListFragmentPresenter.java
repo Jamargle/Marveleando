@@ -9,15 +9,11 @@ import jmlb0003.com.marveleando.presentation.BasePresenter;
 
 public interface CharacterListFragmentPresenter extends BasePresenter<CharacterListFragmentPresenter.CharacterListFragmentView> {
 
-    /**
-     * It launches the download of Marvel characters for the page given as parameter
-     *
-     * @param currentPage Integer with the value for the current page of Marvel characters to
-     *                    download
-     */
-    void fetchCharacters(int currentPage);
+    void searchCharacterByName(
+            int currentPage,
+            @Nullable String query);
 
-    void fetchMoreCharacters(
+    void fetchMoreCharactersOnScroll(
             int currentPage,
             @Nullable String query);
 
@@ -27,17 +23,13 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
     void onCharacterClicked(Character character);
 
-    void searchCharacterByName(
-            int currentPage,
-            @Nullable String query);
-
     interface CharacterListFragmentView extends BasePresenter.BaseView {
 
         void showLoading();
 
         void hideLoading();
 
-        void setCharactersToShow(List<Character> characters);
+        void setBeginningCharactersToShow(List<Character> characters);
 
         void addCharactersToShownList(List<Character> characters);
 
