@@ -47,7 +47,13 @@ public final class CharacterNetworkGatewayImp implements CharacterNetworkReposit
             final int currentCharactersShown = max * (currentPage - 1);
             offset = String.valueOf(currentCharactersShown);
         }
-        final Call<MarvelApiResponse> call = apiClient.getListOfCharacters(name, null, offset);
+        final String searchText;
+        if (name != null && name.length() == 0) {
+            searchText = null;
+        } else {
+            searchText = name;
+        }
+        final Call<MarvelApiResponse> call = apiClient.getListOfCharacters(searchText, null, offset);
         return parseCharactersFromResponse(call);
     }
 

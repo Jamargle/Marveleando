@@ -107,7 +107,9 @@ public final class CharacterListActivity
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                // The query will be handled on submit instead of every text change
+                if (newText.length() > 1) {
+                    listFragment.searchCharacter(newText);
+                }
                 return false;
             }
         });
