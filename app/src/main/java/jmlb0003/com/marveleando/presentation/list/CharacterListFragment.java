@@ -25,6 +25,9 @@ public final class CharacterListFragment
         CharacterListFragmentPresenter.CharacterListFragmentView,
         MarvelCharacterAdapter.CharacterAdapterListener {
 
+    private static final String SAVED_CURRENT_PAGE = "key:CharacterListFragment_current_page";
+    private static final String SAVED_CURRENT_SEARCH = "key:CharacterListFragment_current_search";
+
     @BindView(R.id.character_grid) RecyclerView charactersRecyclerView;
     @BindView(R.id.characters_progress_loading) ProgressBar loadingView;
     @BindView(R.id.empty_list) TextView emptyListView;
@@ -34,6 +37,7 @@ public final class CharacterListFragment
     private MarvelCharacterAdapter adapter;
     private int currentPage = 0;
     private String currentQueryText = null;
+    private EndlessRecyclerOnScrollListener scrollListener;
 
     @Override
     public void onViewCreated(
@@ -43,7 +47,8 @@ public final class CharacterListFragment
         super.onViewCreated(view, savedInstanceState);
         adapter = new MarvelCharacterAdapter(this);
         charactersRecyclerView.setAdapter(adapter);
-        charactersRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((GridLayoutManager) charactersRecyclerView.getLayoutManager()) {
+        final GridLayoutManager layoutManager = (GridLayoutManager) charactersRecyclerView.getLayoutManager();
+        scrollListener = new EndlessRecyclerOnScrollListener(layoutManager) {
 
             @Override
             public void onLoadMore(final int currentPage) {
@@ -51,13 +56,26 @@ public final class CharacterListFragment
                 presenter.fetchMoreCharacters(currentPage, currentQueryText);
             }
 
-        });
+        };
+        charactersRecyclerView.addOnScrollListener(scrollListener);
     }
 
     @Override
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            recoverState(savedInstanceState);
+        } else {
             presenter.fetchCharacters(0);
+        }
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        outState.putInt(SAVED_CURRENT_PAGE, currentPage);
+        outState.putString(SAVED_CURRENT_SEARCH, currentQueryText);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -125,7 +143,20 @@ public final class CharacterListFragment
 
     public void searchCharacter(final String query) {
         currentQueryText = query;
+        scrollListener.setCurrentPage(0);
         presenter.searchCharacterByName(0, query);
+    }
+
+    private void recoverState(final Bundle state) {
+        if (state.containsKey(SAVED_CURRENT_PAGE)) {
+            currentPage = state.getInt(SAVED_CURRENT_PAGE);
+        }
+        if (state.containsKey(SAVED_CURRENT_SEARCH)) {
+            currentQueryText = state.getString(SAVED_CURRENT_SEARCH);
+        }
+
+        scrollListener.setCurrentPage(currentPage - 1);
+        presenter.searchCharacterByName(currentPage - 1, currentQueryText);
     }
 
     interface Callback {

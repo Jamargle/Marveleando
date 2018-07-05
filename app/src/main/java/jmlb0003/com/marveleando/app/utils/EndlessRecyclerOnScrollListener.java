@@ -22,6 +22,10 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
         visibleThreshold = DEFAULT_VISIBLE_THRESHOLD * layoutManager.getSpanCount();
     }
 
+    public void setCurrentPage(final int currentPage) {
+        this.currentPage = currentPage;
+    }
+
     @Override
     public void onScrolled(
             final RecyclerView recyclerView,
