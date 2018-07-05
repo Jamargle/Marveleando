@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.presentation.list;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -50,6 +52,37 @@ public final class CharacterListFragmentPresenterImp
             }
 
         });
+    }
+
+    @Override
+    public void fetchMoreCharacters(
+            final int currentPage,
+            @Nullable final String query) {
+
+        if (getView() != null) {
+            getView().showLoading();
+        }
+        searchCharactersUseCase.execute(
+                new SearchCharacters.Input(currentPage, query),
+                new DefaultObserver<List<Character>>() {
+
+                    @Override
+                    public void processOnNext(final List<Character> characters) {
+                        if (getView() != null) {
+                            getView().hideNoCharactersToShow();
+                            getView().addCharactersToShownList(characters);
+                            getView().hideLoading();
+                        }
+                    }
+
+                    @Override
+                    public void processOnError(final Throwable exception) {
+                        if (getView() != null) {
+                            getView().hideLoading();
+                            getView().showNoCharactersToShow();
+                        }
+                    }
+                });
     }
 
     @Override

@@ -41,6 +41,12 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
             }
         }
         if (endHasBeenReached()) {
+            // Reset current page and previous total item count if the list has been restarted
+            // and has less items
+            if (previousTotalItemCount > totalItemCount) {
+                previousTotalItemCount = 0;
+                currentPage = 0;
+            }
             currentPage++;
             loading = true;
 

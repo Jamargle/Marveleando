@@ -63,6 +63,15 @@ public final class MarvelCharacterAdapter
         }
     }
 
+    public void showCharacters(@NonNull final List<Character> newCharacters) {
+        characterDataSet.clear();
+        characterDataSet.addAll(newCharacters);
+        notifyDataSetChanged();
+        if (characterDataSet.isEmpty()) {
+            listener.onCharacterDataSetEmpty();
+        }
+    }
+
     public interface CharacterAdapterListener {
 
         void onCharacterDataSetEmpty();

@@ -32,6 +32,8 @@ public final class CharacterListFragment
     @Inject CharacterListFragmentPresenter presenter;
 
     private MarvelCharacterAdapter adapter;
+    private int currentPage = 0;
+    private String currentQueryText = null;
 
     @Override
     public void onViewCreated(
@@ -45,16 +47,17 @@ public final class CharacterListFragment
 
             @Override
             public void onLoadMore(final int currentPage) {
-                presenter.fetchCharacters(currentPage);
+                CharacterListFragment.this.currentPage = currentPage;
+                presenter.fetchMoreCharacters(currentPage, currentQueryText);
             }
 
         });
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        presenter.fetchCharacters(0);
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+            presenter.fetchCharacters(0);
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -76,6 +79,11 @@ public final class CharacterListFragment
     @Override
     public void hideLoading() {
         loadingView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setCharactersToShow(final List<Character> characters) {
+        adapter.showCharacters(characters);
     }
 
     @Override
@@ -116,6 +124,7 @@ public final class CharacterListFragment
     }
 
     public void searchCharacter(final String query) {
+        currentQueryText = query;
         presenter.searchCharacterByName(0, query);
     }
 
