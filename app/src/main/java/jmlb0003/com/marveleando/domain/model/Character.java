@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 import static jmlb0003.com.marveleando.domain.model.Character.TABLE_NAME;
 
 @Entity(tableName = TABLE_NAME)
-public final class Character {
+public final class Character implements Parcelable {
 
     public static final String TABLE_NAME = "characters";
 
@@ -40,6 +42,10 @@ public final class Character {
 
     @Ignore
     private List<String> urls = new ArrayList<>(URL_DEFAULT_COUNT);
+
+    public Character() {
+        // Needed by Room setup
+    }
 
     public int getId() {
         return id;
@@ -87,6 +93,42 @@ public final class Character {
 
     public void setUrls(final List<String> urls) {
         this.urls = urls;
+    }
+
+    public static final Creator<Character> CREATOR = new Creator<Character>() {
+        @Override
+        public Character createFromParcel(final Parcel in) {
+            return new Character(in);
+        }
+
+        @Override
+        public Character[] newArray(final int size) {
+            return new Character[size];
+        }
+    };
+
+    protected Character(final Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        imagePortrait = in.readString();
+        imageLandscape = in.readString();
+        urls = in.createStringArrayList();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(imagePortrait);
+        dest.writeString(imageLandscape);
+        dest.writeStringList(urls);
     }
 
 }

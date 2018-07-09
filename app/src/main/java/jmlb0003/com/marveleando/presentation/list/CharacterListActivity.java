@@ -1,5 +1,6 @@
 package jmlb0003.com.marveleando.presentation.list;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,13 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import jmlb0003.com.marveleando.R;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseActivity;
+import jmlb0003.com.marveleando.presentation.detail.CharacterDetailActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -91,8 +92,8 @@ public final class CharacterListActivity
 
     @Override
     public void onNavigateToCharacterDetails(final Character character) {
-        // TODO Implement on character clicked callback
-        Toast.makeText(this, "The character " + character.getName() + " has been clicked", Toast.LENGTH_SHORT).show();
+        final Intent intent = new Intent(this, CharacterDetailActivity.class);
+        startActivity(intent.putExtras(CharacterDetailActivity.newBundle(character)));
     }
 
     private void initSearchViewQueryTextListener(@NonNull final SearchView searchView) {
