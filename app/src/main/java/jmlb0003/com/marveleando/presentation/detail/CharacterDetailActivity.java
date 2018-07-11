@@ -28,6 +28,13 @@ public final class CharacterDetailActivity
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        if (savedInstanceState == null) {
+            final Character character = getIntent().getParcelableExtra(CHARACTER_TO_SHOW);
+            getFragmentManager().beginTransaction()
+                    .add(R.id.character_details_fragment, CharacterDetailFragment.newInstance(character))
+                    .commit();
+        }
     }
 
     @NonNull

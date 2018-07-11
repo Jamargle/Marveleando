@@ -1,6 +1,9 @@
 <resources>
     <dimen name="character_image_height">185dp</dimen>
-    <dimen name="details_image_header_height">180dp</dimen>
+
+    <!-- Detail Screen -->
+    <dimen name="details_image_header_height">250dp</dimen>
+    <dimen name="margin_bottom_detail_image">16dp</dimen>
     <dimen name="fab_margin">@dimen/activity_horizontal_margin</dimen>
 
     <!-- Text sizes -->
