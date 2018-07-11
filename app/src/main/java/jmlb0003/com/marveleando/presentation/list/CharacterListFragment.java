@@ -18,6 +18,7 @@ import jmlb0003.com.marveleando.R;
 import jmlb0003.com.marveleando.app.utils.EndlessRecyclerOnScrollListener;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseFragment;
+import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
 import jmlb0003.com.marveleando.presentation.list.adapter.MarvelCharacterAdapter;
 
 public final class CharacterListFragment
@@ -138,8 +139,8 @@ public final class CharacterListFragment
     }
 
     @Override
-    public void proceedToCharacterDetails(final Character character) {
-        callback.onNavigateToCharacterDetails(character);
+    public void proceedToCharacterDetails(final CharacterTransitionObject transitionData) {
+        callback.onNavigateToCharacterDetails(transitionData);
     }
 
     @Override
@@ -148,8 +149,8 @@ public final class CharacterListFragment
     }
 
     @Override
-    public void onCharacterClicked(final Character character) {
-        presenter.onCharacterClicked(character);
+    public void onCharacterClicked(final CharacterTransitionObject transitionData) {
+        presenter.onCharacterClicked(transitionData);
     }
 
     public void searchCharacter(final String query) {
@@ -160,7 +161,7 @@ public final class CharacterListFragment
 
     interface Callback {
 
-        void onNavigateToCharacterDetails(Character character);
+        void onNavigateToCharacterDetails(CharacterTransitionObject transitionData);
 
     }
 

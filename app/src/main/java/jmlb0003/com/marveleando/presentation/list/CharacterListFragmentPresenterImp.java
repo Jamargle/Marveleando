@@ -12,6 +12,7 @@ import jmlb0003.com.marveleando.domain.interactor.SearchCharacters;
 import jmlb0003.com.marveleando.domain.interactor.UseCase;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BasePresenterImpl;
+import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
 
 public final class CharacterListFragmentPresenterImp
         extends BasePresenterImpl<CharacterListFragmentPresenter.CharacterListFragmentView>
@@ -101,9 +102,9 @@ public final class CharacterListFragmentPresenterImp
     }
 
     @Override
-    public void onCharacterClicked(final Character character) {
+    public void onCharacterClicked(CharacterTransitionObject transitionData) {
         if (getView() != null) {
-            getView().proceedToCharacterDetails(character);
+            getView().proceedToCharacterDetails(transitionData);
         }
     }
 

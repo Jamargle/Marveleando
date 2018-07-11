@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,9 +13,9 @@ import android.view.MenuItem;
 import javax.inject.Inject;
 
 import jmlb0003.com.marveleando.R;
-import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseActivity;
 import jmlb0003.com.marveleando.presentation.detail.CharacterDetailActivity;
+import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -91,9 +92,17 @@ public final class CharacterListActivity
     }
 
     @Override
-    public void onNavigateToCharacterDetails(final Character character) {
+    public void onNavigateToCharacterDetails(final CharacterTransitionObject transitionData) {
         final Intent intent = new Intent(this, CharacterDetailActivity.class);
-        startActivity(intent.putExtras(CharacterDetailActivity.newBundle(character)));
+        intent.putExtras(CharacterDetailActivity.newBundle(transitionData.getCharacter()));
+
+        final ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                transitionData.getImageForTransition(),
+                transitionData.getNameForTransition());
+        final Bundle bundle = options.toBundle();
+
+        startActivity(intent, bundle);
     }
 
     private void initSearchViewQueryTextListener(@NonNull final SearchView searchView) {

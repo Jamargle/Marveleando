@@ -6,6 +6,7 @@ import java.util.List;
 
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BasePresenter;
+import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
 
 public interface CharacterListFragmentPresenter extends BasePresenter<CharacterListFragmentPresenter.CharacterListFragmentView> {
 
@@ -21,7 +22,7 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
     void onCharacterDataSetEmpty();
 
-    void onCharacterClicked(Character character);
+    void onCharacterClicked(CharacterTransitionObject transitionData);
 
     interface CharacterListFragmentView extends BasePresenter.BaseView {
 
@@ -39,7 +40,7 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
         void showNoInternetConnection();
 
-        void proceedToCharacterDetails(Character character);
+        void proceedToCharacterDetails(CharacterTransitionObject transitionData);
 
     }
 

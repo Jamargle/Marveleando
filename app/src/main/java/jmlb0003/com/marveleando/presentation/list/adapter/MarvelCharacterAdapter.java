@@ -1,6 +1,8 @@
 package jmlb0003.com.marveleando.presentation.list.adapter;
 
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +45,16 @@ public final class MarvelCharacterAdapter
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    listener.onCharacterClicked(characterDataSet.get(viewHolder.getAdapterPosition()));
+                    final Resources resources = viewHolder.itemView.getResources();
+                    final String imageKey = resources.getString(R.string.image_shared_transition_key);
+                    final String nameKey = resources.getString(R.string.image_shared_transition_key);
+
+                    final CharacterTransitionObject characterTransitionObject =
+                            new CharacterTransitionObject(
+                                    Pair.create((View) viewHolder.characterImageView, imageKey),
+                                    Pair.create((View) viewHolder.characterNameView, nameKey),
+                                    characterDataSet.get(viewHolder.getAdapterPosition()));
+                    listener.onCharacterClicked(characterTransitionObject);
                 }
             });
         }
@@ -76,7 +87,7 @@ public final class MarvelCharacterAdapter
 
         void onCharacterDataSetEmpty();
 
-        void onCharacterClicked(Character Character);
+        void onCharacterClicked(CharacterTransitionObject transitionData);
 
     }
 

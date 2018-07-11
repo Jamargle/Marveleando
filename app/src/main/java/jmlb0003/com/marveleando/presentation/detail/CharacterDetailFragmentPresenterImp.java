@@ -28,7 +28,7 @@ public final class CharacterDetailFragmentPresenterImp
             }
 
             if (character.getImageLandscape() != null) {
-                view.showCharacterImage(character.getImageLandscape());
+                view.showCharacterImage(character.getImagePortrait());
             }
         }
     }

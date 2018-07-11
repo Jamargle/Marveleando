@@ -2,6 +2,7 @@ package jmlb0003.com.marveleando.presentation.detail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.MenuItem;
 
 import javax.inject.Inject;
 
@@ -41,6 +42,16 @@ public final class CharacterDetailActivity
     @Override
     protected CharacterDetailActivityPresenter getPresenter() {
         return presenter;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
