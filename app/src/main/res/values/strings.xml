@@ -11,4 +11,5 @@
 
     <!-- Details screen -->
     <string name="title_details_screen">Details</string>
+    <string name="character_image_content_description">Character image</string>
 </resources>

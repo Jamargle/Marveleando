@@ -1,6 +1,9 @@
 <resources>
     <dimen name="character_image_height">185dp</dimen>
+    <dimen name="details_image_header_height">180dp</dimen>
+    <dimen name="fab_margin">@dimen/activity_horizontal_margin</dimen>
 
+    <!-- Text sizes -->
     <dimen name="character_name_text_size">24sp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->

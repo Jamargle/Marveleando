@@ -6,4 +6,5 @@
 
     <color name="character_text_background">#88f2f4ff</color>
     <color name="text_color_black">@android:color/black</color>
+    <color name="favorite_button_icon_color">#FF0000</color>
 </resources>
