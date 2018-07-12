@@ -43,6 +43,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".presentation.detail.CharacterDetailActivity"
         tools:showIn="@layout/activity_details">
@@ -55,7 +56,7 @@
 
             <TextView
                 android:id="@+id/character_name"
-                style="@style/TextAppearance.AppCompat.Title"
+                style="@style/DetailsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:transitionName="@string/name_shared_transition_key"
@@ -66,6 +67,7 @@
 
             <TextView
                 android:id="@+id/character_description"
+                style="@style/DetailsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
