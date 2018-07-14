@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.presentation.detail;
 
+import android.support.annotation.NonNull;
+
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BasePresenter;
 
@@ -9,11 +11,11 @@ public interface CharacterDetailFragmentPresenter extends BasePresenter<Characte
 
     interface CharacterDetailFragmentView extends BasePresenter.BaseView {
 
-        void showCharacterImage(String imagePath);
+        void showCharacterImage(@NonNull String imagePath);
 
-        void showCharacterName(String name);
+        void showCharacterName(@NonNull String name);
 
-        void showCharacterDescription(String description);
+        void showCharacterDescription(@NonNull String description);
 
     }
 

@@ -59,7 +59,7 @@ public final class CharacterDetailFragment
     }
 
     @Override
-    public void showCharacterImage(final String imagePath) {
+    public void showCharacterImage(@NonNull final String imagePath) {
         Picasso.with(getActivity())
                 .load(imagePath).fit().centerCrop()
                 .placeholder(R.drawable.ic_marvel_balloon)
@@ -68,13 +68,18 @@ public final class CharacterDetailFragment
     }
 
     @Override
-    public void showCharacterName(final String name) {
+    public void showCharacterName(@NonNull final String name) {
         characterNameView.setText(name);
     }
 
     @Override
-    public void showCharacterDescription(final String description) {
-        characterDescriptionView.setText(description);
+    public void showCharacterDescription(@NonNull final String description) {
+        if (description.isEmpty()) {
+            characterDescriptionView.setText(
+                    getString(R.string.character_description_empty, characterNameView.getText()));
+        } else {
+            characterDescriptionView.setText(description);
+        }
     }
 
     interface Callback {
