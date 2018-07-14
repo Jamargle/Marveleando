@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/blue_marvel_light</color>
+    <color name="colorPrimaryDark">@color/blue_marvel</color>
+    <color name="colorAccent">@color/red_marvel</color>
 
     <color name="character_text_background">#88f2f4ff</color>
-    <color name="text_color_black">@android:color/black</color>
-    <color name="favorite_button_icon_color">#FF0000</color>
+    <color name="text_color_black">@color/black</color>
+    <color name="favorite_button_ripple_color">@color/pink_ligth</color>
+    <color name="favorite_button_icon_color">@color/white</color>
+
+    <color name="black">@android:color/black</color>
+    <color name="white">@android:color/white</color>
+    <color name="red_marvel">#A31715</color>
+    <color name="blue_marvel">#000AA6</color>
+    <color name="blue_marvel_light">#303F9F</color>
+    <color name="pink_ligth">#FF7EAA</color>
 </resources>
