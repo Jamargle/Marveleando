@@ -169,6 +169,10 @@ public final class CharacterListFragment
         presenter.showCharactersWithoutFilters();
     }
 
+    public void updateCharacter(final int characterId, final boolean isFavorite) {
+        adapter.updateCharacterWithId(characterId, isFavorite);
+    }
+
     interface Callback {
 
         void onNavigateToCharacterDetails(CharacterTransitionObject transitionData);

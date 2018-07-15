@@ -83,6 +83,16 @@ public final class MarvelCharacterAdapter
         }
     }
 
+    public void updateCharacterWithId(final int characterId, final boolean isFavorite) {
+        for (int i = 0; i < characterDataSet.size(); i++) {
+            if (characterDataSet.get(i).getId() == characterId) {
+                characterDataSet.get(i).setFavorite(isFavorite);
+                notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
     public interface CharacterAdapterListener {
 
         void onCharacterDataSetEmpty();

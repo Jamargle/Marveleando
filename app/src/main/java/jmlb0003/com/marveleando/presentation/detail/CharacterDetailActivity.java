@@ -1,5 +1,6 @@
 package jmlb0003.com.marveleando.presentation.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ public final class CharacterDetailActivity
         CharacterDetailActivityPresenter.CharacterDetailActivityView,
         CharacterDetailFragment.Callback {
 
+    public static final String CHARACTER_STATUS_FOR_RESULT = "Key:CharacterDetailActivity_Character_status_for_result";
+    public static final String CHARACTER_ID_FOR_RESULT = "Key:CharacterDetailActivity_Character_id_for_result";
     private static final String CHARACTER_TO_SHOW = "Key:CharacterDetailActivity_Character";
 
     @Inject CharacterDetailActivityPresenter presenter;
@@ -38,6 +41,12 @@ public final class CharacterDetailActivity
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        setCharacterStatusForResult();
+        super.onBackPressed();
+    }
+
     @NonNull
     @Override
     protected CharacterDetailActivityPresenter getPresenter() {
@@ -48,10 +57,21 @@ public final class CharacterDetailActivity
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                setCharacterStatusForResult();
                 supportFinishAfterTransition();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setCharacterStatusForResult() {
+        final CharacterDetailFragment fragment = (CharacterDetailFragment) getFragmentManager()
+                .findFragmentById(R.id.character_details_fragment);
+        final Character character = fragment.getCharacterStatus();
+        final Intent data = new Intent();
+        data.putExtra(CHARACTER_ID_FOR_RESULT, character.getId());
+        data.putExtra(CHARACTER_STATUS_FOR_RESULT, character.isFavorite());
+        setResult(RESULT_OK, data);
     }
 
 }

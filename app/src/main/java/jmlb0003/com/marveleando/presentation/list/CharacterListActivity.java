@@ -25,6 +25,7 @@ public final class CharacterListActivity
         CharacterListFragment.Callback {
 
     private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int REQUEST_CODE_CHARACTER_DETAILS = 123;
 
     @Inject CharacterListActivityPresenter presenter;
 
@@ -113,6 +114,29 @@ public final class CharacterListActivity
         listFragment.showEveryCharacters();
     }
 
+    @Override
+    protected void onActivityResult(
+            final int requestCode,
+            final int resultCode,
+            final Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHARACTER_DETAILS && resultCode == RESULT_OK) {
+            updateCharacter(data);
+        }
+    }
+
+    private void updateCharacter(final Intent data) {
+        final int characterId = data.getIntExtra(CharacterDetailActivity.CHARACTER_ID_FOR_RESULT, -1);
+        if (characterId > 0) {
+            final boolean isFavorite = data.getBooleanExtra(CharacterDetailActivity.CHARACTER_STATUS_FOR_RESULT, false);
+            final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
+                    .findFragmentById(R.id.character_list_fragment);
+
+            listFragment.updateCharacter(characterId, isFavorite);
+        }
+    }
+
     @NonNull
     @Override
     protected CharacterListActivityPresenter getPresenter() {
@@ -130,7 +154,7 @@ public final class CharacterListActivity
                 transitionData.getNameForTransition());
         final Bundle bundle = options.toBundle();
 
-        startActivity(intent, bundle);
+        startActivityForResult(intent, REQUEST_CODE_CHARACTER_DETAILS, bundle);
     }
 
     private void initSearchViewQueryTextListener(@NonNull final SearchView searchView) {

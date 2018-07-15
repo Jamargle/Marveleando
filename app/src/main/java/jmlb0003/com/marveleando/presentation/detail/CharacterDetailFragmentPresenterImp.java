@@ -44,6 +44,8 @@ public final class CharacterDetailFragmentPresenterImp
             if (character.getImagePortrait() != null) {
                 view.showCharacterImage(character.getImagePortrait());
             }
+
+            view.swapFavoriteCharacterState(character.isFavorite());
         }
     }
 

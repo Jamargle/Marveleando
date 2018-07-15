@@ -34,6 +34,8 @@ public final class CharacterDetailFragment
 
     @Inject CharacterDetailFragmentPresenter presenter;
 
+    private boolean isFavorite = false;
+
     public static CharacterDetailFragment newInstance(@NonNull final Character character) {
         final Bundle args = new Bundle();
         args.putParcelable(CHARACTER_TO_SHOW, character);
@@ -79,6 +81,12 @@ public final class CharacterDetailFragment
         presenter.onFavoriteButtonClicked();
     }
 
+    public Character getCharacterStatus() {
+        final Character character = getArguments().getParcelable(CHARACTER_TO_SHOW);
+        character.setFavorite(isFavorite);
+        return character;
+    }
+
     @Override
     public void showCharacterImage(@NonNull final String imagePath) {
         Picasso.with(getActivity())
@@ -105,6 +113,7 @@ public final class CharacterDetailFragment
 
     @Override
     public void swapFavoriteCharacterState(final boolean isFavorite) {
+        this.isFavorite = isFavorite;
         if (isFavorite) {
             favoriteButton.setImageResource(R.drawable.ic_not_favorite);
         } else {
