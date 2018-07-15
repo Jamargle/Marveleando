@@ -50,7 +50,7 @@ public final class SearchCharacters extends UseCase<SearchCharacters.Input, List
 
     private void fetchBeginningCharacters(final ObservableEmitter<List<Character>> emitter) {
         if (characterLocalRepository.beginningCharactersAreValid()) {
-            emitter.onNext(characterLocalRepository.getCharacters());
+            emitter.onNext(characterLocalRepository.getBeginningCharacters());
         } else {
             final List<Character> charactersFromNetwork = characterNetworkRepository.getCharacters();
             characterLocalRepository.refreshBeginningCharactersIfNeeded(charactersFromNetwork);

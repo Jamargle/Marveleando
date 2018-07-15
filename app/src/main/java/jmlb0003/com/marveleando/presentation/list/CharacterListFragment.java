@@ -114,6 +114,7 @@ public final class CharacterListFragment
 
     @Override
     public void setBeginningCharactersToShow(final List<Character> characters) {
+        scrollListener.setCurrentPage(0);
         adapter.showCharacters(characters);
     }
 

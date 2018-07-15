@@ -30,8 +30,8 @@ public final class LocalMarvelGatewayImp implements CharacterLocalRepository {
     }
 
     @Override
-    public List<Character> getCharacters() {
-        return characterDao.getCharacters();
+    public List<Character> getBeginningCharacters() {
+        return characterDao.getBeginningCharacters();
     }
 
     @Override
@@ -63,7 +63,11 @@ public final class LocalMarvelGatewayImp implements CharacterLocalRepository {
 
     @Override
     public void update(final Character characterToUpdate) {
-        characterDao.updateCharacter(characterToUpdate);
+        if (characterDao.getCharacter(characterToUpdate.getId()) != null) {
+            characterDao.updateCharacter(characterToUpdate);
+        } else {
+            characterDao.addCharacter(characterToUpdate);
+        }
     }
 
     @Override

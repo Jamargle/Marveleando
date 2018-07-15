@@ -15,11 +15,14 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface CharacterDao {
 
-    @Query("SELECT * FROM " + Character.TABLE_NAME + " ORDER BY " + Character.COLUMN_NAME)
-    List<Character> getCharacters();
+    @Query("SELECT * FROM " + Character.TABLE_NAME + " ORDER BY " + Character.COLUMN_NAME + " LIMIT 20")
+    List<Character> getBeginningCharacters();
 
     @Query("SELECT * FROM " + Character.TABLE_NAME + " WHERE " + Character.COLUMN_IS_FAVORITE + " =1" + " ORDER BY " + Character.COLUMN_NAME)
     List<Character> getFavoriteCharacters();
+
+    @Query("SELECT * FROM " + Character.TABLE_NAME + " WHERE " + Character.COLUMN_ID + " =:characterId")
+    Character getCharacter(int characterId);
 
     @Insert(onConflict = REPLACE)
     void addCharacter(Character character);

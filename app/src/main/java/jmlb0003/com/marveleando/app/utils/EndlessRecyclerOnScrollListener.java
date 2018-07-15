@@ -24,6 +24,9 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
 
     public void setCurrentPage(final int currentPage) {
         this.currentPage = currentPage;
+        if (currentPage == 0) {
+            loading = false;
+        }
     }
 
     @Override
@@ -59,7 +62,8 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
     }
 
     private boolean endHasBeenReached() {
-        return !loading
+        return totalItemCount >= visibleThreshold   // There is no more items
+                && !loading
                 && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold);
     }
 
