@@ -23,7 +23,7 @@ public final class Character implements Parcelable {
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_IMAGE_PORTRAIT = "image_portrait";
     private static final String COLUMN_IMAGE_LANDSCAPE = "image_landscape";
-    private static final String COLUMN_IS_FAVORITE = "is_favorite";
+    public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true, name = COLUMN_ID)
