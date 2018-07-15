@@ -16,6 +16,8 @@ public interface CharacterLocalRepository {
      */
     List<Character> getCharacters();
 
+    List<Character> getFavoriteCharacters();
+
     boolean beginningCharactersAreValid();
 
     void refreshBeginningCharactersIfNeeded(List<Character> characters);

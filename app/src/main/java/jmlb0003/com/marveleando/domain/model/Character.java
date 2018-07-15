@@ -23,6 +23,7 @@ public final class Character implements Parcelable {
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_IMAGE_PORTRAIT = "image_portrait";
     private static final String COLUMN_IMAGE_LANDSCAPE = "image_landscape";
+    public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true, name = COLUMN_ID)
@@ -40,8 +41,11 @@ public final class Character implements Parcelable {
     @ColumnInfo(name = COLUMN_IMAGE_LANDSCAPE)
     private String imageLandscape;
 
+    @ColumnInfo(name = COLUMN_IS_FAVORITE)
+    private boolean favorite;
+
     @Ignore
-    private List<String> urls = new ArrayList<>(URL_DEFAULT_COUNT);
+    private final List<String> urls = new ArrayList<>(URL_DEFAULT_COUNT);
 
     public Character() {
         // Needed by Room setup
@@ -87,12 +91,22 @@ public final class Character implements Parcelable {
         this.imageLandscape = imageLandscape;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(final boolean favorite) {
+        this.favorite = favorite;
+    }
+
     public List<String> getUrls() {
         return urls;
     }
 
     public void setUrls(final List<String> urls) {
-        this.urls = urls;
+        if (urls != null) {
+            this.urls.addAll(urls);
+        }
     }
 
     public static final Creator<Character> CREATOR = new Creator<Character>() {
@@ -113,7 +127,8 @@ public final class Character implements Parcelable {
         description = in.readString();
         imagePortrait = in.readString();
         imageLandscape = in.readString();
-        urls = in.createStringArrayList();
+        favorite = in.readInt() == 1;
+        urls.addAll(in.createStringArrayList());
     }
 
     @Override
@@ -128,6 +143,7 @@ public final class Character implements Parcelable {
         dest.writeString(description);
         dest.writeString(imagePortrait);
         dest.writeString(imageLandscape);
+        dest.writeInt(favorite ? 1 : 0);
         dest.writeStringList(urls);
     }
 

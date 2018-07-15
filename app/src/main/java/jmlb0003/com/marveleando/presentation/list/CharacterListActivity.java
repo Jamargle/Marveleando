@@ -85,6 +85,34 @@ public final class CharacterListActivity
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_show_favorites:
+                showFavoriteCharacters();
+                return true;
+            case R.id.action_show_everyone:
+                showEveryCharacters();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showFavoriteCharacters() {
+        final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
+                .findFragmentById(R.id.character_list_fragment);
+
+        listFragment.showFavoriteCharacters();
+    }
+
+    private void showEveryCharacters() {
+        final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
+                .findFragmentById(R.id.character_list_fragment);
+
+        listFragment.showEveryCharacters();
+    }
+
     @NonNull
     @Override
     protected CharacterListActivityPresenter getPresenter() {
