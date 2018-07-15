@@ -17,6 +17,10 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
             int currentPage,
             @Nullable String query);
 
+    void showCharactersWithoutFilters();
+
+    void showOnlyFavorites();
+
     void onNoNetworkConnection();
 
     void onCharacterDataSetEmpty();

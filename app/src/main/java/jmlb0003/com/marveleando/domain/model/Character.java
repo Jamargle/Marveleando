@@ -25,6 +25,7 @@ public final class Character implements Parcelable {
     private static final String COLUMN_IMAGE_LANDSCAPE = "image_landscape";
     public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
+    public Character(){}
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true, name = COLUMN_ID)
     private int id;

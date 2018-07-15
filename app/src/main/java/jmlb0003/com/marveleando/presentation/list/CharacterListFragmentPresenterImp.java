@@ -89,6 +89,16 @@ public final class CharacterListFragmentPresenterImp
     }
 
     @Override
+    public void showCharactersWithoutFilters() {
+
+    }
+
+    @Override
+    public void showOnlyFavorites() {
+
+    }
+
+    @Override
     public void onNoNetworkConnection() {
 
     }
