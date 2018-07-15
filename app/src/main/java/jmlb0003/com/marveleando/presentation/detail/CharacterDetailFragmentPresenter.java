@@ -9,6 +9,8 @@ public interface CharacterDetailFragmentPresenter extends BasePresenter<Characte
 
     void loadCharacterDetails(Character character);
 
+    void onFavoriteButtonClicked();
+
     interface CharacterDetailFragmentView extends BasePresenter.BaseView {
 
         void showCharacterImage(@NonNull String imagePath);
@@ -16,6 +18,8 @@ public interface CharacterDetailFragmentPresenter extends BasePresenter<Characte
         void showCharacterName(@NonNull String name);
 
         void showCharacterDescription(@NonNull String description);
+
+        void swapFavoriteCharacterState(boolean isFavorite);
 
     }
 
