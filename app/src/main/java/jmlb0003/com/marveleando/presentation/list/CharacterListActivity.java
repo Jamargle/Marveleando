@@ -4,6 +4,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -23,10 +26,26 @@ public final class CharacterListActivity
 
     @Inject CharacterListActivityPresenter presenter;
 
+    private CharacterListFragment listFragment;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+    }
+
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_character_list, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        if (searchItem != null) {
+            final SearchView searchView = (SearchView) searchItem.getActionView();
+            if (searchView != null) {
+                initSearchViewQueryTextListener(searchView);
+            }
+        }
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     private boolean mayRequestContacts() {
@@ -74,6 +93,26 @@ public final class CharacterListActivity
     public void onNavigateToCharacterDetails(final Character character) {
         // TODO Implement on character clicked callback
         Toast.makeText(this, "The character " + character.getName() + " has been clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    private void initSearchViewQueryTextListener(@NonNull final SearchView searchView) {
+        listFragment = (CharacterListFragment) getFragmentManager()
+                .findFragmentById(R.id.character_list_fragment);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                listFragment.searchCharacter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(final String newText) {
+                if (newText.length() > 1) {
+                    listFragment.searchCharacter(newText);
+                }
+                return false;
+            }
+        });
     }
 
 }
