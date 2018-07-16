@@ -10,4 +10,11 @@
     <string name="search_hint">Type a name</string>
 
     <string name="prefs_key_last_refresh" translatable="false">sp_key:last_refresh</string>
+
+    <!-- Details screen -->
+    <string name="title_details_screen">Details</string>
+    <string name="character_description_empty">There is no description available for %1$s</string>
+    <string name="character_image_content_description">Character image</string>
+    <string name="image_shared_transition_key" translatable="false">key:image</string>
+    <string name="name_shared_transition_key" translatable="false">key:name</string>
 </resources>

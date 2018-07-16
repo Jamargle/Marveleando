@@ -18,14 +18,13 @@ public final class Character implements Parcelable {
     public static final String TABLE_NAME = "characters";
 
     private static final int URL_DEFAULT_COUNT = 3;
-    private static final String COLUMN_ID = "id";
+    public static final String COLUMN_ID = "id";
     public static final String COLUMN_NAME = "name";
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_IMAGE_PORTRAIT = "image_portrait";
     private static final String COLUMN_IMAGE_LANDSCAPE = "image_landscape";
     public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
-    public Character(){}
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true, name = COLUMN_ID)
     private int id;
@@ -47,6 +46,10 @@ public final class Character implements Parcelable {
 
     @Ignore
     private final List<String> urls = new ArrayList<>(URL_DEFAULT_COUNT);
+
+    public Character() {
+        // Needed by Room setup
+    }
 
     public int getId() {
         return id;

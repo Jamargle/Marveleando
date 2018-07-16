@@ -10,11 +10,11 @@ import jmlb0003.com.marveleando.domain.model.Character;
 public interface CharacterLocalRepository {
 
     /**
-     * Retrieve the list of Marvel characters from local resources such the database
+     * Retrieve the list of 20 Marvel characters from local database
      *
      * @return List of {@link Character}
      */
-    List<Character> getCharacters();
+    List<Character> getBeginningCharacters();
 
     List<Character> getFavoriteCharacters();
 

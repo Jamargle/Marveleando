@@ -1,19 +1,21 @@
 package jmlb0003.com.marveleando.presentation.list;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import jmlb0003.com.marveleando.R;
-import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseActivity;
+import jmlb0003.com.marveleando.presentation.detail.CharacterDetailActivity;
+import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -23,6 +25,7 @@ public final class CharacterListActivity
         CharacterListFragment.Callback {
 
     private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int REQUEST_CODE_CHARACTER_DETAILS = 123;
 
     @Inject CharacterListActivityPresenter presenter;
 
@@ -87,13 +90,50 @@ public final class CharacterListActivity
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_show_favorites:
-                presenter.onShowFavoritesSelected();
+                showFavoriteCharacters();
                 return true;
             case R.id.action_show_everyone:
-                presenter.onShowEveryoneSelected();
+                showEveryCharacters();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showFavoriteCharacters() {
+        final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
+                .findFragmentById(R.id.character_list_fragment);
+
+        listFragment.showFavoriteCharacters();
+    }
+
+    private void showEveryCharacters() {
+        final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
+                .findFragmentById(R.id.character_list_fragment);
+
+        listFragment.showEveryCharacters();
+    }
+
+    @Override
+    protected void onActivityResult(
+            final int requestCode,
+            final int resultCode,
+            final Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHARACTER_DETAILS && resultCode == RESULT_OK) {
+            updateCharacter(data);
+        }
+    }
+
+    private void updateCharacter(final Intent data) {
+        final int characterId = data.getIntExtra(CharacterDetailActivity.CHARACTER_ID_FOR_RESULT, -1);
+        if (characterId > 0) {
+            final boolean isFavorite = data.getBooleanExtra(CharacterDetailActivity.CHARACTER_STATUS_FOR_RESULT, false);
+            final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
+                    .findFragmentById(R.id.character_list_fragment);
+
+            listFragment.updateCharacter(characterId, isFavorite);
         }
     }
 
@@ -104,25 +144,17 @@ public final class CharacterListActivity
     }
 
     @Override
-    public void showFavoriteCharacters() {
-        final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
-                .findFragmentById(R.id.character_list_fragment);
+    public void onNavigateToCharacterDetails(final CharacterTransitionObject transitionData) {
+        final Intent intent = new Intent(this, CharacterDetailActivity.class);
+        intent.putExtras(CharacterDetailActivity.newBundle(transitionData.getCharacter()));
 
-        listFragment.showFavoriteCharacters();
-    }
+        final ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                transitionData.getImageForTransition(),
+                transitionData.getNameForTransition());
+        final Bundle bundle = options.toBundle();
 
-    @Override
-    public void showEveryCharacters() {
-        final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
-                .findFragmentById(R.id.character_list_fragment);
-
-        listFragment.showEveryCharacters();
-    }
-
-    @Override
-    public void onNavigateToCharacterDetails(final Character character) {
-        // TODO Implement on character clicked callback
-        Toast.makeText(this, "The character " + character.getName() + " has been clicked", Toast.LENGTH_SHORT).show();
+        startActivityForResult(intent, REQUEST_CODE_CHARACTER_DETAILS, bundle);
     }
 
     private void initSearchViewQueryTextListener(@NonNull final SearchView searchView) {

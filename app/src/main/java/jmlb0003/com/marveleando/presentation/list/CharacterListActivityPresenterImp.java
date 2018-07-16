@@ -12,17 +12,4 @@ public final class CharacterListActivityPresenterImp
     public CharacterListActivityPresenterImp() {
     }
 
-    @Override
-    public void onShowFavoritesSelected() {
-        if (getView() != null) {
-            getView().showFavoriteCharacters();
-        }
-    }
-
-    @Override
-    public void onShowEveryoneSelected() {
-        if (getView() != null) {
-            getView().showEveryCharacters();
-        }
-    }
 }

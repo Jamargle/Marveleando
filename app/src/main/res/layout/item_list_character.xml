@@ -11,11 +11,12 @@
         android:layout_height="@dimen/character_image_height"
         android:contentDescription="@string/character_image"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_marvel_balloon"
+        android:transitionName="@string/image_shared_transition_key"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_marvel_balloon"
         tools:background="@color/colorPrimary" />
 
     <TextView
@@ -28,6 +29,7 @@
         android:padding="@dimen/margin_normal"
         android:textColor="@color/text_color_black"
         android:textSize="@dimen/character_name_text_size"
+        android:transitionName="@string/name_shared_transition_key"
         app:layout_constraintBottom_toBottomOf="@+id/character_image_container"
         app:layout_constraintEnd_toEndOf="@+id/character_image_container"
         app:layout_constraintStart_toStartOf="@+id/character_image_container"
