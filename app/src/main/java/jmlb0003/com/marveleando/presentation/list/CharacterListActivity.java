@@ -1,5 +1,6 @@
 package jmlb0003.com.marveleando.presentation.list;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 import jmlb0003.com.marveleando.R;
 import jmlb0003.com.marveleando.presentation.BaseActivity;
 import jmlb0003.com.marveleando.presentation.detail.CharacterDetailActivity;
+import jmlb0003.com.marveleando.presentation.detail.CharacterDetailFragment;
 import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -22,7 +24,8 @@ import static android.Manifest.permission.READ_CONTACTS;
 public final class CharacterListActivity
         extends BaseActivity<CharacterListActivityPresenter> implements
         CharacterListActivityPresenter.CharacterListActivityView,
-        CharacterListFragment.Callback {
+        CharacterListFragment.Callback,
+        CharacterDetailFragment.Callback {
 
     private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_CODE_CHARACTER_DETAILS = 123;
@@ -145,6 +148,26 @@ public final class CharacterListActivity
 
     @Override
     public void onNavigateToCharacterDetails(final CharacterTransitionObject transitionData) {
+        if (getResources().getBoolean(R.bool.is_tablet)) {
+            showCharacterDetails(transitionData);
+        } else {
+            openCharacterDetails(transitionData);
+        }
+    }
+
+    private void showCharacterDetails(final CharacterTransitionObject transitionData) {
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragmentTransaction
+                    .addSharedElement(transitionData.getImageForTransition().first, transitionData.getImageForTransition().second);
+        }
+        fragmentTransaction
+                .replace(R.id.character_details_container, CharacterDetailFragment.newInstance(transitionData.getCharacter()))
+                .addToBackStack(transitionData.getCharacter().getName())
+                .commit();
+    }
+
+    private void openCharacterDetails(final CharacterTransitionObject transitionData) {
         final Intent intent = new Intent(this, CharacterDetailActivity.class);
         intent.putExtras(CharacterDetailActivity.newBundle(transitionData.getCharacter()));
 
