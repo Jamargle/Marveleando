@@ -4,8 +4,8 @@ import android.content.Context;
 
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 import jmlb0003.com.marveleando.MarveleandoApp;
 import jmlb0003.com.marveleando.data.JobExecutor;
 import jmlb0003.com.marveleando.domain.interactor.PostExecutionThread;
@@ -13,24 +13,18 @@ import jmlb0003.com.marveleando.domain.interactor.ThreadExecutor;
 import jmlb0003.com.marveleando.presentation.UiThread;
 
 @Module
-public final class ApplicationModule {
+public abstract class ApplicationModule {
 
-    @Provides
+    @Binds
     @Singleton
-    public ThreadExecutor provideThreadExecutor() {
-        return new JobExecutor();
-    }
+    public abstract ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor);
 
-    @Provides
+    @Binds
     @Singleton
-    public PostExecutionThread providePostExecutionThread() {
-        return new UiThread();
-    }
+    public abstract PostExecutionThread providePostExecutionThread(UiThread uiThread);
 
-    @Provides
+    @Binds
     @Singleton
-    Context provideApplicationContext(final MarveleandoApp application) {
-        return application;
-    }
+    public abstract Context provideApplicationContext(MarveleandoApp application);
 
 }

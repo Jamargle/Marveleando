@@ -7,6 +7,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import jmlb0003.com.marveleando.domain.interactor.ThreadExecutor;
 
 public final class JobExecutor implements ThreadExecutor {
@@ -17,6 +19,7 @@ public final class JobExecutor implements ThreadExecutor {
 
     private ThreadPoolExecutor threadPoolExecutor;
 
+    @Inject
     public JobExecutor() {
         threadPoolExecutor = new ThreadPoolExecutor(
                 CORE_POOL_SIZE,

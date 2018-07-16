@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.data.network;
 
+import android.support.annotation.Nullable;
+
 import jmlb0003.com.marveleando.data.network.apicontract.MarvelApiResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -23,8 +25,8 @@ public interface MarvelApiClient {
      */
     @GET("v1/public/characters")
     Call<MarvelApiResponse> getListOfCharacters(
-            @Query(KEY_NAME) String searchText,
-            @Query(KEY_LIMIT) int limit,
-            @Query(KEY_OFFSET) int offset);
+            @Nullable @Query(KEY_NAME) String searchText,
+            @Nullable @Query(KEY_LIMIT) String limit,
+            @Nullable @Query(KEY_OFFSET) String offset);
 
 }

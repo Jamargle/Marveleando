@@ -1,65 +1,32 @@
 package jmlb0003.com.marveleando.presentation.list;
 
-import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import javax.inject.Inject;
 
 import jmlb0003.com.marveleando.R;
+import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-public class CharacterListActivity extends BaseActivity {
+public final class CharacterListActivity
+        extends BaseActivity<CharacterListActivityPresenter> implements
+        CharacterListActivityPresenter.CharacterListActivityView,
+        CharacterListFragment.Callback {
 
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
+    @Inject CharacterListActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        // Set up the login form.
-        mEmailView = findViewById(R.id.email);
-//        populateAutoComplete();
-
-        mPasswordView = findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-//                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                attemptLogin();
-            }
-        });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     private boolean mayRequestContacts() {
@@ -70,14 +37,14 @@ public class CharacterListActivity extends BaseActivity {
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
+//            Snackbar.make(, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+//                    .setAction(android.R.string.ok, new View.OnClickListener() {
+//                        @Override
+//                        @TargetApi(Build.VERSION_CODES.M)
+//                        public void onClick(View v) {
+//                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+//                        }
+//                    });
         } else {
             requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
         }
@@ -95,6 +62,18 @@ public class CharacterListActivity extends BaseActivity {
 //                populateAutoComplete();
             }
         }
+    }
+
+    @NonNull
+    @Override
+    protected CharacterListActivityPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void onNavigateToCharacterDetails(final Character character) {
+        // TODO Implement on character clicked callback
+        Toast.makeText(this, "The character " + character.getName() + " has been clicked", Toast.LENGTH_SHORT).show();
     }
 
 }
