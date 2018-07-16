@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
+def marvelApiPrivateKey = localProperties['privateMarvelApiKey']
+def marvelApiPublicKey = localProperties['publicMarvelApiKey']
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -16,6 +23,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    buildTypes.each {
+        it.buildConfigField 'String', 'MARVEL_API_BASE_URL', '"http://gateway.marvel.com/"'
+        it.buildConfigField 'String', 'MARVEL_API_PRIVATE_KEY', marvelApiPrivateKey
+        it.buildConfigField 'String', 'MARVEL_API_PUBLIC_KEY', marvelApiPublicKey
     }
 }
 
