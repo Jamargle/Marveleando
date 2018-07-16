@@ -50,7 +50,9 @@ public final class CharacterDetailFragment
             @Nullable final Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
-        initToolbar();
+        if (!getResources().getBoolean(R.bool.is_tablet)) {
+            initToolbar();
+        }
         if (getArguments() != null) {
             presenter.loadCharacterDetails((Character) getArguments().getParcelable(CHARACTER_TO_SHOW));
         }
@@ -68,6 +70,11 @@ public final class CharacterDetailFragment
     @Override
     protected int getLayoutResourceId() {
         return R.layout.fragment_character_details;
+    }
+
+    @Override
+    protected boolean isToBeRetained() {
+        return true;
     }
 
     @NonNull
@@ -121,7 +128,7 @@ public final class CharacterDetailFragment
         }
     }
 
-    interface Callback {
+    public interface Callback {
     }
 
 }
