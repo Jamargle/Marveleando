@@ -4,6 +4,8 @@
     <!-- Character list screen -->
     <string name="character_list_is_empty">There are no characters to show</string>
     <string name="character_image">This is a Marvel character image</string>
+    <string name="action_search">search</string>
+    <string name="search_hint">Type a name</string>
 
     <string name="prefs_key_last_refresh" translatable="false">sp_key:last_refresh</string>
 </resources>

@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.presentation.list;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import jmlb0003.com.marveleando.domain.model.Character;
@@ -7,9 +9,13 @@ import jmlb0003.com.marveleando.presentation.BasePresenter;
 
 public interface CharacterListFragmentPresenter extends BasePresenter<CharacterListFragmentPresenter.CharacterListFragmentView> {
 
-    void refreshCharacters();
+    void searchCharacterByName(
+            int currentPage,
+            @Nullable String query);
 
-    void fetchMoreCharacters(int currentPage);
+    void fetchMoreCharactersOnScroll(
+            int currentPage,
+            @Nullable String query);
 
     void onNoNetworkConnection();
 
@@ -23,7 +29,9 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
         void hideLoading();
 
-        void updateCharactersToShow(List<Character> characters);
+        void setBeginningCharactersToShow(List<Character> characters);
+
+        void addCharactersToShownList(List<Character> characters);
 
         void showNoCharactersToShow();
 
