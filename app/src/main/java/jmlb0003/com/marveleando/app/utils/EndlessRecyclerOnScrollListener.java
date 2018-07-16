@@ -26,6 +26,7 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
         this.currentPage = currentPage;
         if (currentPage == 0) {
             loading = false;
+            this.currentPage++;
         }
     }
 
@@ -52,7 +53,7 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
             // and has less items
             if (previousTotalItemCount > totalItemCount) {
                 previousTotalItemCount = 0;
-                currentPage = 0;
+                currentPage = 1;
             }
             currentPage++;
             loading = true;

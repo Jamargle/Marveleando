@@ -95,7 +95,7 @@ public final class CharacterListFragmentPresenterImp
 
     @Override
     public void showCharactersWithoutFilters() {
-        searchCharacterByName(0, "");
+        searchCharacterByName(0, null);
     }
 
     @Override
