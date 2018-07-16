@@ -4,6 +4,8 @@
     <!-- Character list screen -->
     <string name="character_list_is_empty">There are no characters to show</string>
     <string name="character_image">This is a Marvel character image</string>
+    <string name="action_show_favorites_title">Show Favorites</string>
+    <string name="action_show_everyone_title">Show Everyone</string>
     <string name="action_search">search</string>
     <string name="search_hint">Type a name</string>
 

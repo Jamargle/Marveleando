@@ -45,6 +45,7 @@ public final class CharacterListFragment
             @Nullable final Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
         adapter = new MarvelCharacterAdapter(this);
         charactersRecyclerView.setAdapter(adapter);
         final GridLayoutManager layoutManager = (GridLayoutManager) charactersRecyclerView.getLayoutManager();
@@ -156,6 +157,14 @@ public final class CharacterListFragment
         currentQueryText = query;
         scrollListener.setCurrentPage(0);
         presenter.searchCharacterByName(0, query);
+    }
+
+    public void showFavoriteCharacters() {
+        presenter.showOnlyFavorites();
+    }
+
+    public void showEveryCharacters() {
+        presenter.showCharactersWithoutFilters();
     }
 
     interface Callback {

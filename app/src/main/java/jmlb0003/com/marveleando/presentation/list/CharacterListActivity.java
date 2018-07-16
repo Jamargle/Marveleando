@@ -83,10 +83,40 @@ public final class CharacterListActivity
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_show_favorites:
+                presenter.onShowFavoritesSelected();
+                return true;
+            case R.id.action_show_everyone:
+                presenter.onShowEveryoneSelected();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @NonNull
     @Override
     protected CharacterListActivityPresenter getPresenter() {
         return presenter;
+    }
+
+    @Override
+    public void showFavoriteCharacters() {
+        final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
+                .findFragmentById(R.id.character_list_fragment);
+
+        listFragment.showFavoriteCharacters();
+    }
+
+    @Override
+    public void showEveryCharacters() {
+        final CharacterListFragment listFragment = (CharacterListFragment) getFragmentManager()
+                .findFragmentById(R.id.character_list_fragment);
+
+        listFragment.showEveryCharacters();
     }
 
     @Override

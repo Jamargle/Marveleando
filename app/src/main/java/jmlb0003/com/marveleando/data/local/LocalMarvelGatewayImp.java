@@ -35,6 +35,11 @@ public final class LocalMarvelGatewayImp implements CharacterLocalRepository {
     }
 
     @Override
+    public List<Character> getFavoriteCharacters() {
+        return characterDao.getFavoriteCharacters();
+    }
+
+    @Override
     public boolean beginningCharactersAreValid() {
         final long currentTime = new Date().getTime();
         return (currentTime - lastRefresh) <= REFRESH_EVERY_10_DAYS;

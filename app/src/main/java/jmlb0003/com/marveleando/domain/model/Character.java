@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 import static jmlb0003.com.marveleando.domain.model.Character.TABLE_NAME;
 
 @Entity(tableName = TABLE_NAME)
-public final class Character {
+public final class Character implements Parcelable {
 
     public static final String TABLE_NAME = "characters";
 
@@ -21,7 +23,9 @@ public final class Character {
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_IMAGE_PORTRAIT = "image_portrait";
     private static final String COLUMN_IMAGE_LANDSCAPE = "image_landscape";
+    public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
+    public Character(){}
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true, name = COLUMN_ID)
     private int id;
@@ -38,8 +42,11 @@ public final class Character {
     @ColumnInfo(name = COLUMN_IMAGE_LANDSCAPE)
     private String imageLandscape;
 
+    @ColumnInfo(name = COLUMN_IS_FAVORITE)
+    private boolean favorite;
+
     @Ignore
-    private List<String> urls = new ArrayList<>(URL_DEFAULT_COUNT);
+    private final List<String> urls = new ArrayList<>(URL_DEFAULT_COUNT);
 
     public int getId() {
         return id;
@@ -81,12 +88,60 @@ public final class Character {
         this.imageLandscape = imageLandscape;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(final boolean favorite) {
+        this.favorite = favorite;
+    }
+
     public List<String> getUrls() {
         return urls;
     }
 
     public void setUrls(final List<String> urls) {
-        this.urls = urls;
+        if (urls != null) {
+            this.urls.addAll(urls);
+        }
+    }
+
+    public static final Creator<Character> CREATOR = new Creator<Character>() {
+        @Override
+        public Character createFromParcel(final Parcel in) {
+            return new Character(in);
+        }
+
+        @Override
+        public Character[] newArray(final int size) {
+            return new Character[size];
+        }
+    };
+
+    protected Character(final Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        imagePortrait = in.readString();
+        imageLandscape = in.readString();
+        favorite = in.readInt() == 1;
+        urls.addAll(in.createStringArrayList());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(imagePortrait);
+        dest.writeString(imageLandscape);
+        dest.writeInt(favorite ? 1 : 0);
+        dest.writeStringList(urls);
     }
 
 }
