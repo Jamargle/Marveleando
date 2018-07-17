@@ -7,10 +7,16 @@
     <dimen name="fab_margin">@dimen/activity_horizontal_margin</dimen>
     <dimen name="title_normal">@dimen/title_text_size_big</dimen>
 
+    <!-- Widget -->
+    <dimen name="widget_padding">8dp</dimen>
+    <dimen name="widget_min_height">180dp</dimen>
+    <dimen name="widget_min_width">180dp</dimen>
+
     <!-- Text sizes -->
     <dimen name="character_name_text_size">24sp</dimen>
     <dimen name="title_text_size_big">24sp</dimen>
     <dimen name="text_big">20sp</dimen>
+    <dimen name="widget_title_text_size">20sp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
