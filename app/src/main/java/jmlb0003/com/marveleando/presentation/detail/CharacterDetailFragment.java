@@ -126,9 +126,13 @@ public final class CharacterDetailFragment
         } else {
             favoriteButton.setImageResource(R.drawable.ic_favorite);
         }
+        callback.onFavoriteStateChanged(isFavorite);
     }
 
     public interface Callback {
+
+        void onFavoriteStateChanged(boolean isFavorite);
+
     }
 
 }

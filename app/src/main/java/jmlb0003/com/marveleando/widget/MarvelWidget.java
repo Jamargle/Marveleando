@@ -22,6 +22,10 @@ public final class MarvelWidget extends AppWidgetProvider {
                 // The intent to start the service to fetch the data shown in the widget
                 WidgetViewsFactory.getWidgetViewsFactoryIntent(context));
 
+
+        // This force the update of the dataset in the list when there has been a change
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);
+
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.presentation.detail;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +12,7 @@ import javax.inject.Inject;
 import jmlb0003.com.marveleando.R;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseActivity;
+import jmlb0003.com.marveleando.widget.MarvelWidget;
 
 public final class CharacterDetailActivity
         extends BaseActivity<CharacterDetailActivityPresenter> implements
@@ -72,6 +75,19 @@ public final class CharacterDetailActivity
         data.putExtra(CHARACTER_ID_FOR_RESULT, character.getId());
         data.putExtra(CHARACTER_STATUS_FOR_RESULT, character.isFavorite());
         setResult(RESULT_OK, data);
+    }
+
+    @Override
+    public void onFavoriteStateChanged(final boolean isFavorite) {
+        final Intent intentToUpdateWidget = new Intent(this, MarvelWidget.class);
+        intentToUpdateWidget.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+        final ComponentName widgetProvider = new ComponentName(getApplicationContext(), MarvelWidget.class);
+        final int[] widgetIds = AppWidgetManager.getInstance(getApplicationContext())
+                .getAppWidgetIds(widgetProvider);
+        intentToUpdateWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
+
+        sendBroadcast(intentToUpdateWidget);
     }
 
 }
