@@ -25,7 +25,7 @@ public final class RepositoryModule {
 
     @Provides
     @Singleton
-    public CharacterLocalRepository providesLocalRecipesGateway(final LocalMarvelGatewayImp repository) {
+    public CharacterLocalRepository providesCharacterLocalGateway(final LocalMarvelGatewayImp repository) {
         return repository;
     }
 

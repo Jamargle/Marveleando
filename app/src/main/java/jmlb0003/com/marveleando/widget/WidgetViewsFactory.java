@@ -60,12 +60,12 @@ public final class WidgetViewsFactory implements RemoteViewsService.RemoteViewsF
     public RemoteViews getViewAt(final int position) {
         final Character character = dataSet.get(position);
 
-        final RemoteViews ingredientWidgetItem = new RemoteViews(
+        final RemoteViews characterWidgetItem = new RemoteViews(
                 context.getPackageName(),
                 R.layout.widget_item_list);
-        ingredientWidgetItem.setTextViewText(R.id.item_label, character.getName());
+        characterWidgetItem.setTextViewText(R.id.item_label, character.getName());
 
-        return ingredientWidgetItem;
+        return characterWidgetItem;
     }
 
     @Override
