@@ -3,6 +3,7 @@ package jmlb0003.com.marveleando.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,7 +14,13 @@ import jmlb0003.com.marveleando.presentation.detail.CharacterDetailActivity;
 
 public final class MarvelWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(
+    public static void sendRefreshBroadcast(final Context context) {
+        final Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.setComponent(new ComponentName(context, MarvelWidget.class));
+        context.sendBroadcast(intent);
+    }
+
+    private static void updateAppWidget(
             @NonNull final Context context,
             @NonNull final AppWidgetManager appWidgetManager,
             final int appWidgetId) {
@@ -50,6 +57,22 @@ public final class MarvelWidget extends AppWidgetProvider {
         for (final int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+    }
+
+    @Override
+    public void onReceive(
+            final Context context,
+            final Intent intent) {
+
+        final String action = intent.getAction();
+        if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            final ComponentName componentName = new ComponentName(context, MarvelWidget.class);
+            appWidgetManager.notifyAppWidgetViewDataChanged(
+                    appWidgetManager.getAppWidgetIds(componentName),
+                    R.id.widget_list);
+        }
+        super.onReceive(context, intent);
     }
 
 }
