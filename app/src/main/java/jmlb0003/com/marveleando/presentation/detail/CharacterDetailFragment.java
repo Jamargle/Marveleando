@@ -88,9 +88,12 @@ public final class CharacterDetailFragment
         presenter.onFavoriteButtonClicked();
     }
 
+    @Nullable
     public Character getCharacterStatus() {
         final Character character = getArguments().getParcelable(CHARACTER_TO_SHOW);
-        character.setFavorite(isFavorite);
+        if (character != null) {
+            character.setFavorite(isFavorite);
+        }
         return character;
     }
 

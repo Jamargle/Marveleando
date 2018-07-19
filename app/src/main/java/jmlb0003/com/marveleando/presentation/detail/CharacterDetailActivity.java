@@ -71,10 +71,14 @@ public final class CharacterDetailActivity
         final CharacterDetailFragment fragment = (CharacterDetailFragment) getFragmentManager()
                 .findFragmentById(R.id.character_details_fragment);
         final Character character = fragment.getCharacterStatus();
-        final Intent data = new Intent();
-        data.putExtra(CHARACTER_ID_FOR_RESULT, character.getId());
-        data.putExtra(CHARACTER_STATUS_FOR_RESULT, character.isFavorite());
-        setResult(RESULT_OK, data);
+        if (character != null) {
+            final Intent data = new Intent();
+            data.putExtra(CHARACTER_ID_FOR_RESULT, character.getId());
+            data.putExtra(CHARACTER_STATUS_FOR_RESULT, character.isFavorite());
+            setResult(RESULT_OK, data);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
     }
 
     @Override

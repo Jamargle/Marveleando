@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.presentation.detail;
 
+import android.support.annotation.Nullable;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -15,6 +17,7 @@ public final class CharacterDetailFragmentPresenterImp
 
     private final UseCase<Character, Void> updateCharacterUseCase;
 
+    @Nullable
     private Character character;
 
     @Inject
@@ -51,6 +54,9 @@ public final class CharacterDetailFragmentPresenterImp
 
     @Override
     public void onFavoriteButtonClicked() {
+        if (character == null) {
+            return;
+        }
         character.setFavorite(!character.isFavorite());
 
         updateCharacterUseCase.execute(character, new DefaultObserver<Void>() {
