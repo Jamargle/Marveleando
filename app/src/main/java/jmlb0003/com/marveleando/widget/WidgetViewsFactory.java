@@ -12,6 +12,7 @@ import java.util.List;
 import jmlb0003.com.marveleando.R;
 import jmlb0003.com.marveleando.data.local.CharactersDb;
 import jmlb0003.com.marveleando.domain.model.Character;
+import jmlb0003.com.marveleando.presentation.detail.CharacterDetailActivity;
 
 public final class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
@@ -61,6 +62,10 @@ public final class WidgetViewsFactory implements RemoteViewsService.RemoteViewsF
                 context.getPackageName(),
                 R.layout.widget_item_list);
         characterWidgetItem.setTextViewText(R.id.item_label, character.getName());
+
+        final Intent clickIntent = new Intent();
+        clickIntent.putExtras(CharacterDetailActivity.newBundle(character));
+        characterWidgetItem.setOnClickFillInIntent(R.id.item_label, clickIntent);
 
         return characterWidgetItem;
     }

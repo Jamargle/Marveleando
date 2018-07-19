@@ -1,12 +1,15 @@
 package jmlb0003.com.marveleando.widget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import jmlb0003.com.marveleando.R;
+import jmlb0003.com.marveleando.presentation.detail.CharacterDetailActivity;
 
 public final class MarvelWidget extends AppWidgetProvider {
 
@@ -23,6 +26,12 @@ public final class MarvelWidget extends AppWidgetProvider {
                 // The intent to start the service to fetch the data shown in the widget
                 WidgetViewsFactory.getWidgetViewsFactoryIntent(context));
 
+        // region This is for item click listener besides the setOnClickFillInIntent stuff in the Views factory
+        final Intent detailsIntent = new Intent(context, CharacterDetailActivity.class);
+        final PendingIntent clickPendingIntentTemplate = PendingIntent
+                .getActivity(context, 0, detailsIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.widget_list, clickPendingIntentTemplate);
+        //endregion
 
         // This force the update of the dataset in the list when there has been a change
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);
