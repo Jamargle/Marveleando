@@ -36,7 +36,22 @@
             android:name=".presentation.detail.CharacterDetailActivity"
             android:label="@string/title_details_screen"
             android:theme="@style/AppTheme.NoActionBar" />
-        
+
+        <receiver android:name=".widget.MarvelWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/marvel_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.WidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

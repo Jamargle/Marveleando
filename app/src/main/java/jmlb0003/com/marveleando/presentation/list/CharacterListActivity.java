@@ -1,6 +1,8 @@
 package jmlb0003.com.marveleando.presentation.list;
 
 import android.app.FragmentTransaction;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -18,6 +20,7 @@ import jmlb0003.com.marveleando.presentation.BaseActivity;
 import jmlb0003.com.marveleando.presentation.detail.CharacterDetailActivity;
 import jmlb0003.com.marveleando.presentation.detail.CharacterDetailFragment;
 import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
+import jmlb0003.com.marveleando.widget.MarvelWidget;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -153,6 +156,19 @@ public final class CharacterListActivity
         } else {
             openCharacterDetails(transitionData);
         }
+    }
+    
+    @Override
+    public void onFavoriteStateChanged(final boolean isFavorite) {
+        final Intent intentToUpdateWidget = new Intent(this, MarvelWidget.class);
+        intentToUpdateWidget.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+        final ComponentName widgetProvider = new ComponentName(getApplicationContext(), MarvelWidget.class);
+        final int[] widgetIds = AppWidgetManager.getInstance(getApplicationContext())
+                .getAppWidgetIds(widgetProvider);
+        intentToUpdateWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
+
+        sendBroadcast(intentToUpdateWidget);
     }
 
     private void showCharacterDetails(final CharacterTransitionObject transitionData) {

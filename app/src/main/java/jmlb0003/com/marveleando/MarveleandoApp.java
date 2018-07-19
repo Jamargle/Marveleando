@@ -9,6 +9,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import jmlb0003.com.marveleando.app.di.DaggerAppComponent;
+import jmlb0003.com.marveleando.widget.MarvelWidget;
 
 public final class MarveleandoApp extends Application implements HasActivityInjector {
 
@@ -23,6 +24,9 @@ public final class MarveleandoApp extends Application implements HasActivityInje
                 .application(this)
                 .build()
                 .inject(this);
+
+
+        MarvelWidget.sendRefreshBroadcast(this);
     }
 
     @Override
