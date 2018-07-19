@@ -21,4 +21,5 @@
     <!-- Widget -->
     <string name="widget_title">Marvel Favorites</string>
     <string name="add_widget">Add widget</string>
+    <string name="empty_widget_text">There is no favorite characters yet</string>
 </resources>

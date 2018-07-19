@@ -16,6 +16,7 @@ public final class MarvelWidget extends AppWidgetProvider {
             final int appWidgetId) {
 
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.marvel_widget);
+        views.setEmptyView(R.id.widget_list, R.id.empty_widget_list);
         views.setTextViewText(R.id.appwidget_text, context.getString(R.string.widget_title));
         views.setRemoteAdapter(
                 R.id.widget_list,   // Id of the layout holding the ListView
