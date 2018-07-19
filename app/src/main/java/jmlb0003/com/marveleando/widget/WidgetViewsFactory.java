@@ -18,10 +18,7 @@ public final class WidgetViewsFactory implements RemoteViewsService.RemoteViewsF
     private final List<Character> dataSet = new ArrayList<>();
     private Context context;
 
-    WidgetViewsFactory(
-            final Context context,
-            final Intent intent) {
-
+    WidgetViewsFactory(final Context context) {
         this.context = context;
     }
 

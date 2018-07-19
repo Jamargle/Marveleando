@@ -7,7 +7,7 @@ public final class WidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(final Intent intent) {
-        return new WidgetViewsFactory(getApplicationContext(), intent);
+        return new WidgetViewsFactory(getApplicationContext());
     }
 
 }
