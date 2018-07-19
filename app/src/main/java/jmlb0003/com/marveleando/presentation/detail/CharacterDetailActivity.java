@@ -21,7 +21,7 @@ public final class CharacterDetailActivity
 
     public static final String CHARACTER_STATUS_FOR_RESULT = "Key:CharacterDetailActivity_Character_status_for_result";
     public static final String CHARACTER_ID_FOR_RESULT = "Key:CharacterDetailActivity_Character_id_for_result";
-    private static final String CHARACTER_TO_SHOW = "Key:CharacterDetailActivity_Character";
+    public static final String CHARACTER_TO_SHOW = "Key:CharacterDetailActivity_Character";
 
     @Inject CharacterDetailActivityPresenter presenter;
 

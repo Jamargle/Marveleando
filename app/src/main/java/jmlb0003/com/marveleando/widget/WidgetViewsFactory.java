@@ -64,7 +64,9 @@ public final class WidgetViewsFactory implements RemoteViewsService.RemoteViewsF
         characterWidgetItem.setTextViewText(R.id.item_label, character.getName());
 
         final Intent clickIntent = new Intent();
-        clickIntent.putExtras(CharacterDetailActivity.newBundle(character));
+        // I do not know the reason why the widget fails the loading of data when we add extras
+        // with intent.putExtras() so we cannot use CharacterDetailActivity.newBundle method
+        clickIntent.putExtra(CharacterDetailActivity.CHARACTER_TO_SHOW, character);
         characterWidgetItem.setOnClickFillInIntent(R.id.item_label, clickIntent);
 
         return characterWidgetItem;
