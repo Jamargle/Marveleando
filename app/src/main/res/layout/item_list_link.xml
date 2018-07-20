@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/link_icon"
+    android:layout_width="@dimen/link_icon_width"
+    android:layout_height="@dimen/link_icon_height"
+    android:contentDescription="@string/link_icon_image_description"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:scaleType="centerInside"
+    app:srcCompat="@drawable/ic_marvel_balloon"
+    tools:background="@color/colorPrimary" />
