@@ -7,6 +7,7 @@ import dagger.Provides;
 import jmlb0003.com.marveleando.MarveleandoApp;
 import jmlb0003.com.marveleando.data.local.CharactersDb;
 import jmlb0003.com.marveleando.data.local.dao.CharacterDao;
+import jmlb0003.com.marveleando.data.local.dao.UrlsDao;
 
 @Module
 class RoomDatabaseModule {
@@ -21,6 +22,12 @@ class RoomDatabaseModule {
     @Provides
     CharacterDao providesCharacterDao(final CharactersDb database) {
         return database.getCharacterDao();
+    }
+
+    @Singleton
+    @Provides
+    UrlsDao providesUrlsDao(final CharactersDb database) {
+        return database.getUrlsDao();
     }
 
 }

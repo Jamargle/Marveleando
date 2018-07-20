@@ -45,7 +45,7 @@ public final class Character implements Parcelable {
     private boolean favorite;
 
     @Ignore
-    private final List<String> urls = new ArrayList<>(URL_DEFAULT_COUNT);
+    private final List<MarvelUrl> urls = new ArrayList<>(URL_DEFAULT_COUNT);
 
     public Character() {
         // Needed by Room setup
@@ -99,11 +99,11 @@ public final class Character implements Parcelable {
         this.favorite = favorite;
     }
 
-    public List<String> getUrls() {
+    public List<MarvelUrl> getUrls() {
         return urls;
     }
 
-    public void setUrls(final List<String> urls) {
+    public void setUrls(final List<MarvelUrl> urls) {
         if (urls != null) {
             this.urls.addAll(urls);
         }
@@ -128,7 +128,7 @@ public final class Character implements Parcelable {
         imagePortrait = in.readString();
         imageLandscape = in.readString();
         favorite = in.readInt() == 1;
-        urls.addAll(in.createStringArrayList());
+        in.readTypedList(this.urls, MarvelUrl.CREATOR);
     }
 
     @Override
@@ -144,7 +144,7 @@ public final class Character implements Parcelable {
         dest.writeString(imagePortrait);
         dest.writeString(imageLandscape);
         dest.writeInt(favorite ? 1 : 0);
-        dest.writeStringList(urls);
+        dest.writeTypedList(urls);
     }
 
 }
