@@ -30,6 +30,18 @@ android {
         it.buildConfigField 'String', 'MARVEL_API_PRIVATE_KEY', marvelApiPrivateKey
         it.buildConfigField 'String', 'MARVEL_API_PUBLIC_KEY', marvelApiPublicKey
     }
+
+    flavorDimensions "free-paid"
+    productFlavors {
+        free {
+            dimension "free-paid"
+            applicationId "jmlb0003.com.marveleando.free"
+        }
+        paid {
+            dimension "free-paid"
+            applicationId "jmlb0003.com.marveleando.paid"
+        }
+    }
 }
 
 dependencies {
@@ -71,6 +83,6 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
 
     // Google Ads
-    implementation "com.google.android.gms:play-services-ads:$rootProject.ext.playServicesAdsVersion"
+    freeImplementation "com.google.android.gms:play-services-ads:$rootProject.ext.playServicesAdsVersion"
 
 }
