@@ -3,6 +3,7 @@ package jmlb0003.com.marveleando.presentation.detail;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
@@ -92,6 +93,11 @@ public final class CharacterDetailActivity
         intentToUpdateWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
 
         sendBroadcast(intentToUpdateWidget);
+    }
+
+    @Override
+    public void openLink(final String url) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
 }

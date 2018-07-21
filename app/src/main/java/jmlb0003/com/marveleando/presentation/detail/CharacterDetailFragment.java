@@ -148,12 +148,14 @@ public final class CharacterDetailFragment
 
     @Override
     public void onLinkClicked(final MarvelUrl url) {
-        // TODO navigate to link
+        callback.openLink(url.getUrl());
     }
 
     public interface Callback {
 
         void onFavoriteStateChanged(boolean isFavorite);
+
+        void openLink(String url);
 
     }
 
