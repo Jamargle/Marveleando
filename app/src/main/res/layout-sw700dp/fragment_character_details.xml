@@ -30,9 +30,6 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/character_image_content_description"
                 android:transitionName="@string/image_shared_transition_key"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_marvel_balloon" />
 
             <android.support.v7.widget.Toolbar
@@ -66,9 +63,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:transitionName="@string/name_shared_transition_key"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/character_image"
                 tools:text="The name of the character" />
 
             <TextView
@@ -76,10 +70,13 @@
                 style="@style/DetailsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/character_name"
                 tools:text="The name of the character with a very long description The name of the character with a very long description The name of the character with a very long description The name of the character with a very long description The name of the character with a very long description The name of the character with a very long description" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/link_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_list_link" />
 
         </LinearLayout>
 
@@ -92,9 +89,9 @@
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:focusable="true"
-        app:rippleColor="@color/favorite_button_ripple_color"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
+        app:rippleColor="@color/favorite_button_ripple_color"
         app:srcCompat="@drawable/ic_favorite" />
 
 </android.support.design.widget.CoordinatorLayout>
