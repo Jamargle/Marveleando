@@ -47,6 +47,7 @@ public final class CharacterListFragmentPresenterImp
                     public void processOnNext(final List<Character> characters) {
                         if (getView() != null) {
                             getView().hideNoCharactersToShow();
+                            getView().enableLoadMoreOnScroll();
                             getView().setBeginningCharactersToShow(characters);
                             getView().hideLoading();
                         }
@@ -111,6 +112,7 @@ public final class CharacterListFragmentPresenterImp
                     public void processOnNext(final List<Character> characters) {
                         if (getView() != null) {
                             getView().hideNoCharactersToShow();
+                            getView().disableLoadMoreOnScroll();
                             getView().setBeginningCharactersToShow(characters);
                             getView().hideLoading();
                         }
