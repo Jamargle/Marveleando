@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,17 +14,22 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import jmlb0003.com.marveleando.R;
 import jmlb0003.com.marveleando.domain.model.Character;
+import jmlb0003.com.marveleando.domain.model.MarvelUrl;
 import jmlb0003.com.marveleando.presentation.BaseFragment;
+import jmlb0003.com.marveleando.presentation.detail.adapter.LinkAdapter;
 
 public final class CharacterDetailFragment
         extends BaseFragment<CharacterDetailFragment.Callback, CharacterDetailFragmentPresenter> implements
-        CharacterDetailFragmentPresenter.CharacterDetailFragmentView {
+        CharacterDetailFragmentPresenter.CharacterDetailFragmentView,
+        LinkAdapter.LinkAdapterListener {
 
     private static final String CHARACTER_TO_SHOW = "CharacterDetailFragment:Character_to_show";
 
@@ -30,6 +37,7 @@ public final class CharacterDetailFragment
     @BindView(R.id.character_image) ImageView characterImageView;
     @BindView(R.id.character_name) TextView characterNameView;
     @BindView(R.id.character_description) TextView characterDescriptionView;
+    @BindView(R.id.link_list_view) RecyclerView characterLinks;
     @BindView(R.id.favorite_button) FloatingActionButton favoriteButton;
 
     @Inject CharacterDetailFragmentPresenter presenter;
@@ -132,9 +140,22 @@ public final class CharacterDetailFragment
         callback.onFavoriteStateChanged(isFavorite);
     }
 
+    @Override
+    public void showCharacterLinks(final List<MarvelUrl> urls) {
+        characterLinks.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        characterLinks.setAdapter(new LinkAdapter(urls, this));
+    }
+
+    @Override
+    public void onLinkClicked(final MarvelUrl url) {
+        callback.openLink(url.getUrl());
+    }
+
     public interface Callback {
 
         void onFavoriteStateChanged(boolean isFavorite);
+
+        void openLink(String url);
 
     }
 

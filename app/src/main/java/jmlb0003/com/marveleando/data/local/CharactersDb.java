@@ -6,10 +6,13 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import jmlb0003.com.marveleando.data.local.dao.CharacterDao;
+import jmlb0003.com.marveleando.data.local.dao.UrlsDao;
 import jmlb0003.com.marveleando.domain.model.Character;
+import jmlb0003.com.marveleando.domain.model.MarvelUrl;
 
 @Database(entities = {
-        Character.class
+        Character.class,
+        MarvelUrl.class
 },
         version = 1,
         exportSchema = false)
@@ -29,5 +32,7 @@ public abstract class CharactersDb extends RoomDatabase {
     }
 
     public abstract CharacterDao getCharacterDao();
+
+    public abstract UrlsDao getUrlsDao();
 
 }

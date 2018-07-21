@@ -15,6 +15,10 @@
     <string name="title_details_screen">Details</string>
     <string name="character_description_empty">There is no description available for %1s</string>
     <string name="character_image_content_description">Character image</string>
+    <string name="link_icon_image_description">Link to a character resource</string>
+    <string name="comic">Comic</string>
+    <string name="wiki">Wiki</string>
+    <string name="detail">Detail</string>
     <string name="image_shared_transition_key" translatable="false">key:image</string>
     <string name="name_shared_transition_key" translatable="false">key:name</string>
 

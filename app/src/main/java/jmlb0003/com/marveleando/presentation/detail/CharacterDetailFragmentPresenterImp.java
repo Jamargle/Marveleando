@@ -48,6 +48,10 @@ public final class CharacterDetailFragmentPresenterImp
                 view.showCharacterImage(character.getImagePortrait());
             }
 
+            if (character.getUrls() != null) {
+                view.showCharacterLinks(character.getUrls());
+            }
+
             view.swapFavoriteCharacterState(character.isFavorite());
         }
     }

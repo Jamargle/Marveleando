@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -157,7 +158,7 @@ public final class CharacterListActivity
             openCharacterDetails(transitionData);
         }
     }
-    
+
     @Override
     public void onFavoriteStateChanged(final boolean isFavorite) {
         final Intent intentToUpdateWidget = new Intent(this, MarvelWidget.class);
@@ -169,6 +170,11 @@ public final class CharacterListActivity
         intentToUpdateWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
 
         sendBroadcast(intentToUpdateWidget);
+    }
+
+    @Override
+    public void openLink(final String url) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
     private void showCharacterDetails(final CharacterTransitionObject transitionData) {
