@@ -69,4 +69,8 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
+    // Google Ads
+    implementation "com.google.android.gms:play-services-ads:$rootProject.ext.playServicesAdsVersion"
+
 }

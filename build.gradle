@@ -54,4 +54,8 @@ ext {
     espressoVersion = '3.0.2'
     // Mockito
     mockitoVersion = '2.16.0'
+
+    // Ads
+    playServicesAdsVersion = '15.0.1'
+
 }
