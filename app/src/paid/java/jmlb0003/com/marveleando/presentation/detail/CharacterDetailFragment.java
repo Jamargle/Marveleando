@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -41,7 +39,6 @@ public final class CharacterDetailFragment
     @BindView(R.id.character_description) TextView characterDescriptionView;
     @BindView(R.id.link_list_view) RecyclerView characterLinks;
     @BindView(R.id.favorite_button) FloatingActionButton favoriteButton;
-    @BindView(R.id.ad_view) AdView adView;
 
     @Inject CharacterDetailFragmentPresenter presenter;
 
@@ -61,20 +58,12 @@ public final class CharacterDetailFragment
             @Nullable final Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
-        initAddView();
         if (!getResources().getBoolean(R.bool.is_tablet)) {
             initToolbar();
         }
         if (getArguments() != null) {
             presenter.loadCharacterDetails((Character) getArguments().getParcelable(CHARACTER_TO_SHOW));
         }
-    }
-
-    private void initAddView() {
-        final AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        adView.loadAd(adRequest);
     }
 
     private void initToolbar() {
