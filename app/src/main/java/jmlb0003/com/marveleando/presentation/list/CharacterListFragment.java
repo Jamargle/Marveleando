@@ -146,6 +146,17 @@ public final class CharacterListFragment
     }
 
     @Override
+    public void enableLoadMoreOnScroll() {
+        charactersRecyclerView.removeOnScrollListener(scrollListener); // Remove if exists
+        charactersRecyclerView.addOnScrollListener(scrollListener);
+    }
+
+    @Override
+    public void disableLoadMoreOnScroll() {
+        charactersRecyclerView.removeOnScrollListener(scrollListener);
+    }
+
+    @Override
     public void onCharacterDataSetEmpty() {
         presenter.onCharacterDataSetEmpty();
     }

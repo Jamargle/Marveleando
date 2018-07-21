@@ -46,6 +46,10 @@ public interface CharacterListFragmentPresenter extends BasePresenter<CharacterL
 
         void proceedToCharacterDetails(CharacterTransitionObject transitionData);
 
+        void enableLoadMoreOnScroll();
+
+        void disableLoadMoreOnScroll();
+
     }
 
 }
