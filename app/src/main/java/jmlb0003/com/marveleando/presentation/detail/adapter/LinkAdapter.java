@@ -37,8 +37,7 @@ public final class LinkAdapter
     @Override
     public void onBindViewHolder(@NonNull final MarvelUrlViewHolder holder, final int position) {
         final MarvelUrl url = urls.get(position);
-        holder.bindLink(url);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.bindLink(url, new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 listener.onLinkClicked(url);
