@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:bottom="10dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="90"
+                android:endColor="@color/colorPrimary"
+                android:startColor="@color/red_marvel" />
+        </shape>
+    </item>
+
+    <item>
+        <bitmap
+            android:gravity="clip_horizontal|top"
+            android:src="@drawable/marveleando" />
+    </item>
+
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/shield" />
+    </item>
+
+    <item>
+        <bitmap
+            android:gravity="clip_horizontal|bottom"
+            android:src="@drawable/copyright" />
+    </item>
+
+</layer-list>

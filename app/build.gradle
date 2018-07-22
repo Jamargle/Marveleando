@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
+def marvelApiPrivateKey = localProperties['privateMarvelApiKey']
+def marvelApiPublicKey = localProperties['publicMarvelApiKey']
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -10,11 +17,29 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildTypes.each {
+        it.buildConfigField 'String', 'MARVEL_API_BASE_URL', '"http://gateway.marvel.com/"'
+        it.buildConfigField 'String', 'MARVEL_API_PRIVATE_KEY', marvelApiPrivateKey
+        it.buildConfigField 'String', 'MARVEL_API_PUBLIC_KEY', marvelApiPublicKey
+    }
+
+    flavorDimensions "free-paid"
+    productFlavors {
+        free {
+            dimension "free-paid"
+            applicationId "jmlb0003.com.marveleando.free"
+        }
+        paid {
+            dimension "free-paid"
+            applicationId "jmlb0003.com.marveleando.paid"
         }
     }
 }
@@ -23,6 +48,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    // ConstraintLayout
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
 
     // Rx
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
@@ -49,9 +76,17 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
 
+    // region Testing
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
-    // Mockito
-    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    androidTestImplementation "com.android.support.test:rules:$rootProject.testRunnerVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
+    // Mockito
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    // endregion
+
+    // Google Ads
+    freeImplementation "com.google.android.gms:play-services-ads:$rootProject.ext.playServicesAdsVersion"
+
 }

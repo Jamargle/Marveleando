@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="character_image_height">300dp</dimen>
+    <dimen name="character_list_width">300dp</dimen>
+    <dimen name="details_image_header_height">400dp</dimen>
+</resources>

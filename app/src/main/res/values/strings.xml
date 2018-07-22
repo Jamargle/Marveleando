@@ -1,12 +1,31 @@
 <resources>
     <string name="app_name">Marveleando</string>
+    <string name="copyright_marvel">Data provided by Marvel. © 2018 MARVEL</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <!-- Character list screen -->
+    <string name="character_list_is_empty">There are no characters to show</string>
+    <string name="character_image">This is a Marvel character image</string>
+    <string name="action_show_favorites_title">Show Favorites</string>
+    <string name="action_show_everyone_title">Show Everyone</string>
+    <string name="action_search">search</string>
+    <string name="search_hint">Type a name</string>
+
+    <string name="prefs_key_last_refresh" translatable="false">sp_key:last_refresh</string>
+
+    <!-- Details screen -->
+    <string name="title_details_screen">Details</string>
+    <string name="character_description_empty">There is no description available for %1s</string>
+    <string name="character_image_content_description">Character image</string>
+    <string name="link_icon_image_description">Link to a character resource</string>
+    <string name="comic">Comic</string>
+    <string name="wiki">Wiki</string>
+    <string name="detail">Detail</string>
+    <string name="image_shared_transition_key" translatable="false">key:image</string>
+    <string name="name_shared_transition_key" translatable="false">key:name</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!-- Widget -->
+    <string name="widget_title">Marvel Favorites</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_widget_text">There is no favorite characters yet</string>
 </resources>

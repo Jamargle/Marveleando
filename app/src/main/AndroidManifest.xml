@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="jmlb0003.com.marveleando">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MarveleandoApp"
         android:allowBackup="false"
@@ -14,14 +16,46 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".presentation.list.CharacterListActivity"
-            android:label="@string/app_name">
+            android:name=".presentation.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.list.CharacterListActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <activity
+            android:name=".presentation.detail.CharacterDetailActivity"
+            android:label="@string/title_details_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver android:name=".widget.MarvelWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/marvel_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.WidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>
 
