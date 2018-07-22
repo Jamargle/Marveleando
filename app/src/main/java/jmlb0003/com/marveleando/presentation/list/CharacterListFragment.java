@@ -14,8 +14,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import jmlb0003.com.marveleando.MarveleandoApp;
 import jmlb0003.com.marveleando.R;
 import jmlb0003.com.marveleando.app.utils.EndlessRecyclerOnScrollListener;
+import jmlb0003.com.marveleando.app.utils.FirebaseAnalyticsHelper;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.presentation.BaseFragment;
 import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
@@ -34,6 +36,7 @@ public final class CharacterListFragment
     @BindView(R.id.empty_list) TextView emptyListView;
 
     @Inject CharacterListFragmentPresenter presenter;
+    @Inject FirebaseAnalyticsHelper analyticsHelper;
 
     private MarvelCharacterAdapter adapter;
     private int currentPage = 0;
@@ -64,6 +67,7 @@ public final class CharacterListFragment
 
     @Override
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        analyticsHelper.setCurrentScreenList(getActivity());
         if (savedInstanceState != null) {
             recoverState(savedInstanceState);
         } else {

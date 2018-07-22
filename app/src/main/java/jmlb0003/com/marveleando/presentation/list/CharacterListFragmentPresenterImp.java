@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import jmlb0003.com.marveleando.app.utils.FirebaseAnalyticsHelper;
 import jmlb0003.com.marveleando.domain.interactor.DefaultObserver;
 import jmlb0003.com.marveleando.domain.interactor.FetchFavoriteCharacters;
 import jmlb0003.com.marveleando.domain.interactor.SearchCharacters;
@@ -21,14 +22,17 @@ public final class CharacterListFragmentPresenterImp
 
     private final UseCase<SearchCharacters.Input, List<Character>> searchCharactersUseCase;
     private final UseCase<Void, List<Character>> fetchFavoriteCharactersUseCase;
+    private final FirebaseAnalyticsHelper firebaseAnalyticsHelper;
 
     @Inject
     public CharacterListFragmentPresenterImp(
             @Named(SearchCharacters.NAME) final UseCase<SearchCharacters.Input, List<Character>> searchCharactersUseCase,
-            @Named(FetchFavoriteCharacters.NAME) final UseCase<Void, List<Character>> fetchFavoriteCharactersUseCase) {
+            @Named(FetchFavoriteCharacters.NAME) final UseCase<Void, List<Character>> fetchFavoriteCharactersUseCase,
+            final FirebaseAnalyticsHelper firebaseAnalyticsHelper) {
 
         this.searchCharactersUseCase = searchCharactersUseCase;
         this.fetchFavoriteCharactersUseCase = fetchFavoriteCharactersUseCase;
+        this.firebaseAnalyticsHelper = firebaseAnalyticsHelper;
     }
 
     @Override
@@ -36,6 +40,7 @@ public final class CharacterListFragmentPresenterImp
             final int currentPage,
             final String query) {
 
+        firebaseAnalyticsHelper.logSearch(query);
         if (getView() != null) {
             getView().showLoading();
         }
@@ -68,6 +73,7 @@ public final class CharacterListFragmentPresenterImp
             final int currentPage,
             @Nullable final String query) {
 
+        firebaseAnalyticsHelper.logScroll(currentPage, query);
         if (getView() != null) {
             getView().showLoading();
         }
@@ -96,11 +102,13 @@ public final class CharacterListFragmentPresenterImp
 
     @Override
     public void showCharactersWithoutFilters() {
+        firebaseAnalyticsHelper.logShowWithoutFilters();
         searchCharacterByName(0, null);
     }
 
     @Override
     public void showOnlyFavorites() {
+        firebaseAnalyticsHelper.logShowFavorites();
         if (getView() != null) {
             getView().showLoading();
         }
@@ -142,6 +150,7 @@ public final class CharacterListFragmentPresenterImp
 
     @Override
     public void onCharacterClicked(CharacterTransitionObject transitionData) {
+        firebaseAnalyticsHelper.logCharacterClicked(transitionData.getCharacter());
         if (getView() != null) {
             getView().proceedToCharacterDetails(transitionData);
         }
