@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="is_tablet">false</bool>
+    <integer name="character_grid_span_count">2</integer>
     <integer name="google_play_services_version">12451000</integer>
 </resources>
