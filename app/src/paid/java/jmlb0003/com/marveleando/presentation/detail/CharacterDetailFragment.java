@@ -132,11 +132,14 @@ public final class CharacterDetailFragment
     @Override
     public void swapFavoriteCharacterState(final boolean isFavorite) {
         this.isFavorite = isFavorite;
+        final int imageToSet;
         if (isFavorite) {
-            favoriteButton.setImageResource(R.drawable.ic_not_favorite);
+            imageToSet = R.drawable.ic_not_favorite;
         } else {
-            favoriteButton.setImageResource(R.drawable.ic_favorite);
+            imageToSet = R.drawable.ic_favorite;
         }
+        favoriteButton.setImageResource(imageToSet);
+        favoriteButton.setTag(imageToSet);
         callback.onFavoriteStateChanged(isFavorite);
     }
 
