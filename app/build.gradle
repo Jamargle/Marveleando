@@ -87,6 +87,10 @@ dependencies {
     // endregion
 
     // Google Ads
-    freeImplementation "com.google.android.gms:play-services-ads:$rootProject.ext.playServicesAdsVersion"
+    freeImplementation "com.google.android.gms:play-services-ads:$rootProject.playServicesAdsVersion"
+    // Google Analytics
+    implementation "com.google.firebase:firebase-core:$rootProject.firebaseAnalyticsVersion"
 
 }
+
+apply plugin: 'com.google.gms.google-services'
