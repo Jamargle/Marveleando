@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:fitsSystemWindows="true"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    tools:context=".presentation.list.CharacterListActivity">
+
+    <fragment
+        android:id="@+id/character_list_fragment"
+        android:name="jmlb0003.com.marveleando.presentation.list.CharacterListFragment"
+        android:layout_width="@dimen/character_list_width"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_character_list" />
+
+    <FrameLayout
+        android:id="@+id/character_details_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+</LinearLayout>

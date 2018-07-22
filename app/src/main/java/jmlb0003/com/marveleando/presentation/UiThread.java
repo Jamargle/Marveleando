@@ -1,5 +1,7 @@
 package jmlb0003.com.marveleando.presentation;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import jmlb0003.com.marveleando.domain.interactor.PostExecutionThread;
@@ -10,6 +12,7 @@ import jmlb0003.com.marveleando.domain.interactor.PostExecutionThread;
  */
 public final class UiThread implements PostExecutionThread {
 
+    @Inject
     public UiThread() {
     }
 
