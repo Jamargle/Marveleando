@@ -14,6 +14,8 @@ public interface CharacterDetailFragmentPresenter extends BasePresenter<Characte
 
     void onFavoriteButtonClicked();
 
+    void onLinkClicked(MarvelUrl url);
+
     interface CharacterDetailFragmentView extends BasePresenter.BaseView {
 
         void showCharacterImage(@NonNull String imagePath);
@@ -25,6 +27,8 @@ public interface CharacterDetailFragmentPresenter extends BasePresenter<Characte
         void swapFavoriteCharacterState(boolean isFavorite);
 
         void showCharacterLinks(List<MarvelUrl> urls);
+
+        void goToShowLink(MarvelUrl url);
 
     }
 

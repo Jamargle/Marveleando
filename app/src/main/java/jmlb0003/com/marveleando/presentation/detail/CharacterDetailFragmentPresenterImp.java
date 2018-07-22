@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import jmlb0003.com.marveleando.app.utils.FirebaseAnalyticsHelper;
 import jmlb0003.com.marveleando.domain.interactor.DefaultObserver;
 import jmlb0003.com.marveleando.domain.interactor.UpdateCharacter;
 import jmlb0003.com.marveleando.domain.interactor.UseCase;
 import jmlb0003.com.marveleando.domain.model.Character;
+import jmlb0003.com.marveleando.domain.model.MarvelUrl;
 import jmlb0003.com.marveleando.presentation.BasePresenterImpl;
 
 public final class CharacterDetailFragmentPresenterImp
@@ -16,15 +18,18 @@ public final class CharacterDetailFragmentPresenterImp
         implements CharacterDetailFragmentPresenter {
 
     private final UseCase<Character, Void> updateCharacterUseCase;
+    private final FirebaseAnalyticsHelper firebaseAnalyticsHelper;
 
     @Nullable
     private Character character;
 
     @Inject
     public CharacterDetailFragmentPresenterImp(
-            @Named(UpdateCharacter.NAME) final UseCase<Character, Void> updateCharacterUseCase) {
+            @Named(UpdateCharacter.NAME) final UseCase<Character, Void> updateCharacterUseCase,
+            final FirebaseAnalyticsHelper analyticsHelper) {
 
         this.updateCharacterUseCase = updateCharacterUseCase;
+        this.firebaseAnalyticsHelper = analyticsHelper;
     }
 
     @Override
@@ -66,6 +71,7 @@ public final class CharacterDetailFragmentPresenterImp
         updateCharacterUseCase.execute(character, new DefaultObserver<Void>() {
             @Override
             public void processOnComplete() {
+                firebaseAnalyticsHelper.logMarkedAsFavorite(character);
                 if (getView() != null) {
                     getView().swapFavoriteCharacterState(character.isFavorite());
                 }
@@ -78,6 +84,14 @@ public final class CharacterDetailFragmentPresenterImp
                 character.setFavorite(!character.isFavorite());
             }
         });
+    }
+
+    @Override
+    public void onLinkClicked(final MarvelUrl url) {
+        firebaseAnalyticsHelper.logCharacterLinkCLicked(character, url);
+        if (getView() != null) {
+            getView().goToShowLink(url);
+        }
     }
 
 }

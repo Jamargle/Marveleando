@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import jmlb0003.com.marveleando.R;
+import jmlb0003.com.marveleando.app.utils.FirebaseAnalyticsHelper;
 import jmlb0003.com.marveleando.domain.model.Character;
 import jmlb0003.com.marveleando.domain.model.MarvelUrl;
 import jmlb0003.com.marveleando.presentation.BaseFragment;
@@ -41,6 +42,7 @@ public final class CharacterDetailFragment
     @BindView(R.id.favorite_button) FloatingActionButton favoriteButton;
 
     @Inject CharacterDetailFragmentPresenter presenter;
+    @Inject FirebaseAnalyticsHelper analyticsHelper;
 
     private boolean isFavorite = false;
 
@@ -73,6 +75,12 @@ public final class CharacterDetailFragment
             activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        analyticsHelper.setCurrentScreenDetails(getActivity());
     }
 
     @Override

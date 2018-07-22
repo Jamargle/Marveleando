@@ -15,6 +15,7 @@ import jmlb0003.com.marveleando.MarveleandoApp;
         ApplicationModule.class,
         AndroidInjectionModule.class,
         ActivityBuilder.class,
+        AnalyticsModule.class,
         RepositoryModule.class,
         RoomDatabaseModule.class
 })
