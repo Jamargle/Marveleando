@@ -158,6 +158,11 @@ public final class CharacterDetailFragment
     }
 
     @Override
+    public void goToShowLink(final MarvelUrl url) {
+        callback.openLink(url.getUrl());
+    }
+
+    @Override
     public void onLinkClicked(final MarvelUrl url) {
         callback.openLink(url.getUrl());
     }
