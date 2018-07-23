@@ -28,7 +28,7 @@ android {
         release {
             keyAlias signingKeyAlias
             keyPassword signingKeyPassword
-            storeFile file('../keystore.jks')
+            storeFile file('./keystore.jks')
             storePassword signingKeyStorePassword
         }
     }
@@ -37,6 +37,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     buildTypes.each {
