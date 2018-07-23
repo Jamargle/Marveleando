@@ -10,6 +10,10 @@
     <string name="action_search">search</string>
     <string name="search_hint">Type a name</string>
 
+    <string name="no_internet_title">There is no Internet connection</string>
+    <string name="enable_internet_message">Please, enable Internet to see the movies information.</string>
+    <string name="go_to_settings">Go to Settings</string>
+
     <string name="prefs_key_last_refresh" translatable="false">sp_key:last_refresh</string>
 
     <!-- Details screen -->
