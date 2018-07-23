@@ -7,6 +7,10 @@ localProperties.load(new FileInputStream(localPropertiesFile))
 def marvelApiPrivateKey = localProperties['privateMarvelApiKey']
 def marvelApiPublicKey = localProperties['publicMarvelApiKey']
 
+def signingKeyAlias = localProperties['signingKeyAlias']
+def signingKeyPassword = localProperties['signingKeyPassword']
+def signingKeyStorePassword = localProperties['signingKeyStorePassword']
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -19,6 +23,16 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+
+    signingConfigs {
+        release {
+            keyAlias signingKeyAlias
+            keyPassword signingKeyPassword
+            storeFile file('../keystore.jks')
+            storePassword signingKeyStorePassword
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
