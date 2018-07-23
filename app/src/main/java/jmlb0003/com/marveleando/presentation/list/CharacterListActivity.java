@@ -4,7 +4,6 @@ import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,15 +23,12 @@ import jmlb0003.com.marveleando.presentation.detail.CharacterDetailFragment;
 import jmlb0003.com.marveleando.presentation.list.adapter.CharacterTransitionObject;
 import jmlb0003.com.marveleando.widget.MarvelWidget;
 
-import static android.Manifest.permission.READ_CONTACTS;
-
 public final class CharacterListActivity
         extends BaseActivity<CharacterListActivityPresenter> implements
         CharacterListActivityPresenter.CharacterListActivityView,
         CharacterListFragment.Callback,
         CharacterDetailFragment.Callback {
 
-    private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_CODE_CHARACTER_DETAILS = 123;
 
     @Inject CharacterListActivityPresenter presenter;
@@ -57,41 +53,6 @@ public final class CharacterListActivity
         }
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-//            Snackbar.make(, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-//                    .setAction(android.R.string.ok, new View.OnClickListener() {
-//                        @Override
-//                        @TargetApi(Build.VERSION_CODES.M)
-//                        public void onClick(View v) {
-//                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-//                        }
-//                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
-        return false;
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                populateAutoComplete();
-            }
-        }
     }
 
     @Override
