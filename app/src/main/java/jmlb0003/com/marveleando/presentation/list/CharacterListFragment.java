@@ -1,8 +1,13 @@
 package jmlb0003.com.marveleando.presentation.list;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,7 +19,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import jmlb0003.com.marveleando.MarveleandoApp;
 import jmlb0003.com.marveleando.R;
 import jmlb0003.com.marveleando.app.utils.EndlessRecyclerOnScrollListener;
 import jmlb0003.com.marveleando.app.utils.FirebaseAnalyticsHelper;
@@ -57,8 +61,12 @@ public final class CharacterListFragment
 
             @Override
             public void onLoadMore(final int currentPage) {
-                CharacterListFragment.this.currentPage = currentPage;
-                presenter.fetchMoreCharactersOnScroll(currentPage, currentQueryText);
+                if (hasNetworkConnection()) {
+                    CharacterListFragment.this.currentPage = currentPage;
+                    presenter.fetchMoreCharactersOnScroll(currentPage, currentQueryText);
+                } else {
+                    presenter.onNoNetworkConnection();
+                }
             }
 
         };
@@ -67,13 +75,28 @@ public final class CharacterListFragment
 
     @Override
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-        analyticsHelper.setCurrentScreenList(getActivity());
-        if (savedInstanceState != null) {
-            recoverState(savedInstanceState);
+        if (hasNetworkConnection()) {
+            analyticsHelper.setCurrentScreenList(getActivity());
+            if (savedInstanceState != null) {
+                recoverState(savedInstanceState);
+            } else {
+                presenter.searchCharacterByName(0, currentQueryText);
+            }
         } else {
-            presenter.searchCharacterByName(0, currentQueryText);
+            presenter.onNoNetworkConnection();
         }
         super.onActivityCreated(savedInstanceState);
+    }
+
+    private boolean hasNetworkConnection() {
+        if (getActivity() != null) {
+            final ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivityManager != null) {
+                final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                return networkInfo != null && networkInfo.isConnectedOrConnecting();
+            }
+        }
+        return false;
     }
 
     private void recoverState(final Bundle state) {
@@ -141,7 +164,34 @@ public final class CharacterListFragment
 
     @Override
     public void showNoInternetConnection() {
-        // TODO Implement no internet connection message
+        if (getActivity() == null) {
+            return;
+        }
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.no_internet_title)
+                .setMessage(R.string.enable_internet_message)
+                .setPositiveButton(R.string.go_to_settings, new DialogInterface.OnClickListener() {
+                    public void onClick(
+                            final DialogInterface dialog,
+                            final int which) {
+
+                        openDeviceSettings();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(
+                            final DialogInterface dialog,
+                            final int which) {
+
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void openDeviceSettings() {
+        callback.openDeviceSettings();
     }
 
     @Override
@@ -191,6 +241,8 @@ public final class CharacterListFragment
     interface Callback {
 
         void onNavigateToCharacterDetails(CharacterTransitionObject transitionData);
+
+        void openDeviceSettings();
 
     }
 
