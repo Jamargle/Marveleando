@@ -138,7 +138,9 @@ public final class CharacterListFragmentPresenterImp
 
     @Override
     public void onNoNetworkConnection() {
-
+        if (getView() != null) {
+            getView().showNoInternetConnection();
+        }
     }
 
     @Override
