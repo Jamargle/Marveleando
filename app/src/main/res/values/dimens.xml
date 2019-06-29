@@ -1,5 +1,6 @@
 <resources>
     <dimen name="character_image_height">185dp</dimen>
+    <dimen name="character_list_width">300dp</dimen>
 
     <!-- Detail Screen -->
     <dimen name="details_image_header_height">250dp</dimen>
